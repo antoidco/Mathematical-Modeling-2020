@@ -7,8 +7,9 @@ namespace PlaneSim.PlaneSim
 {
     class Aircraft
     {
+        public Rotation Rotation { get; set; }
         public Vector3 Position { get; set; }
-        public List<AircraftComponent> Components;
+        public List<AComponent> Components;
         public double Mass
         {
             get
@@ -17,9 +18,10 @@ namespace PlaneSim.PlaneSim
             }
         }
 
-        public Aircraft(Vector3 initialPosition)
+        public Aircraft(Vector3 initialPosition, Rotation rotation)
         {
-            Components = new List<AircraftComponent>();
+            Rotation = rotation;
+            Components = new List<AComponent>();
             Position = initialPosition;
         }
 

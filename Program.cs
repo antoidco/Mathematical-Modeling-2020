@@ -16,22 +16,18 @@ namespace PlaneSim
 
         private static double getPlaneMassExample()
         {
-            var aircraft = new Aircraft(new Vector3(0, 0, 1000));
-            var wingComponent = new AircraftComponent();
-            wingComponent.Mass = 5;
-            wingComponent.Name = "Left wing";
-            aircraft.Components.Add(wingComponent);
-
-            aircraft.Components.Add(new AircraftComponent() { Mass = 10, Name = "Right wing" });
-            aircraft.Components.Add(new AircraftComponent() { Mass = 50, Name = "Engine"});
+            var aircraft = new Aircraft(new Vector3(0, 0, 1000), new Rotation());
 
             return aircraft.Mass;
         }
 
         private static void simulationExample(float timeStep)
         {
-            var aircraft = new Aircraft(new Vector3(0, 0, 250));
-            var simulator = new AircraftSimulator(aircraft);
+            var aircraft = new Aircraft(new Vector3(0, 0, 250), new Rotation());
+            var engine1 = new Engine(10, "Engine 1", Vector3.Zero);
+            aircraft.Components.Add(engine1);
+            engine1.CurrentPower = 40;
+            var simulator = new Simulator(aircraft);
 
             while (aircraft.Position.Z > 0)
             {
