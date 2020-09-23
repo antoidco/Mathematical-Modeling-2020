@@ -7,6 +7,7 @@
         public double Roll { get; set; }
         public Rotation(double yaw, double pitch, double roll)
         {
+
             Yaw = yaw;
             Pitch = pitch;
             Roll = roll;
