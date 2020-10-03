@@ -2,6 +2,7 @@
 {
     public class Rotation
     {
+        // todo: Replace with Quaternion
         public double Yaw { get; set; }
         public double Pitch { get; set; }
         public double Roll { get; set; }

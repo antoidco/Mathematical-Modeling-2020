@@ -2,7 +2,7 @@
 
 namespace PlaneSim.PlaneSim
 {
-    public abstract partial class AComponent
+    public abstract class AComponent
     {
         public double Mass { get; set; }
         public string Name { get; set; }
