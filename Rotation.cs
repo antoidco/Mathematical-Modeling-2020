@@ -1,4 +1,4 @@
-﻿namespace PlaneSim.PlaneSim {
+﻿namespace AircraftSimulator {
     public class Rotation {
         // todo: Replace with Quaternion
         public double Yaw { get; set; }

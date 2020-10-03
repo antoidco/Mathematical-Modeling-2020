@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Numerics;
 
-namespace PlaneSim.PlaneSim {
-    public class Engine : AComponent {
+namespace AircraftSimulator {
+    public class Engine : Component {
         private double _currentPower;
 
         public double CurrentPower {

@@ -1,25 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Numerics;
-using System.Text;
 
-namespace PlaneSim.PlaneSim {
+namespace AircraftSimulator {
     class Aircraft {
         public Rotation Rotation { get; set; }
         public Vector3 Position { get; set; }
-        public List<AComponent> Components;
+        public List<Component> Components;
 
         public double Mass {
-            get { return getMass(); }
+            get { return EvaluateMass(); }
         }
 
         public Aircraft(Vector3 initialPosition, Rotation rotation) {
             Rotation = rotation;
-            Components = new List<AComponent>();
+            Components = new List<Component>();
             Position = initialPosition;
         }
 
-        private double getMass() {
+        private double EvaluateMass() {
             double sum = 0;
             foreach (var component in Components) {
                 sum += component.Mass;
