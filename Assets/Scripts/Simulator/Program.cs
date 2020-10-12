@@ -3,12 +3,14 @@ using System.Numerics;
 
 namespace AircraftSimulator {
     class Program {
+        /*
         static void Main(string[] args) {
             Console.WriteLine(GetPlaneMassExample());
             Console.ReadLine();
 
             SimulationExample(0.1f);
         }
+        */
 
         private static double GetPlaneMassExample() {
             var aircraft = new Aircraft(new Vector3(0, 0, 1000), new Rotation());

@@ -37,14 +37,15 @@ namespace AircraftSimulator {
 
             var acceleration = new Vector3(
                 (float) (accelerationAmplitude * Math.Sin(_aircraft.Rotation.Yaw) * Math.Cos(_aircraft.Rotation.Roll)),
-                (float) (accelerationAmplitude * Math.Cos(_aircraft.Rotation.Yaw) * Math.Cos(_aircraft.Rotation.Roll)),
-                (float) (accelerationAmplitude * Math.Sin(_aircraft.Rotation.Roll)));
+                (float) (accelerationAmplitude * Math.Sin(_aircraft.Rotation.Roll)),
+                (float) (accelerationAmplitude * Math.Cos(_aircraft.Rotation.Yaw) * Math.Cos(_aircraft.Rotation.Roll))
+                );
 
             _newAircraftVelocity += acceleration * (float) timeStep;
         }
 
         private void GravityProcessing(double timeStep) {
-            _newAircraftVelocity += new Vector3(0, 0, GravityConstant) * (float) timeStep;
+            _newAircraftVelocity += new Vector3(0, GravityConstant, 0) * (float) timeStep;
         }
 
         private void WeatherProcessing(double timeStep) {
