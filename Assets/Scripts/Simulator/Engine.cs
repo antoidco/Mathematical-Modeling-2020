@@ -1,14 +1,11 @@
 ﻿using System;
 using UnityEngine;
 
-namespace AircraftSimulator
-{
-    public class Engine : Component
-    {
+namespace AircraftSimulator {
+    public class Engine : Component {
         private double _currentPower;
 
-        public Engine(double mass, string name, Vector3 relativePosition, double maxPower = 100)
-        {
+        public Engine(double mass, string name, Vector3 relativePosition, double maxPower = 100) {
             _currentPower = 0;
             MaxPower = 400;
             Mass = mass;
@@ -16,8 +13,7 @@ namespace AircraftSimulator
             RelativePosition = relativePosition;
         }
 
-        public double CurrentPower
-        {
+        public double CurrentPower {
             get => _currentPower;
             set => _currentPower = Math.Max(Math.Min(MaxPower, value), 0);
         }

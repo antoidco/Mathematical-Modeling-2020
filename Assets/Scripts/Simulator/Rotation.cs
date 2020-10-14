@@ -1,53 +1,43 @@
 ﻿using UnityEngine;
 
-namespace AircraftSimulator
-{
-    public class Rotation
-    {
+namespace AircraftSimulator {
+    public class Rotation {
         // todo: Replace with Quaternion
         private float _yaw, _pitch, _roll;
 
-        public Rotation(double yaw, double pitch, double roll)
-        {
+        public Rotation(double yaw, double pitch, double roll) {
             Yaw = yaw;
             Pitch = pitch;
             Roll = roll;
             RQuat = Quaternion.Euler(-(float) Pitch, (float) Yaw, (float) Roll);
         }
 
-        public Rotation()
-        {
+        public Rotation() {
             Yaw = 0;
             Pitch = 0;
             Roll = 0;
             RQuat = Quaternion.Euler(-(float) Pitch, (float) Yaw, (float) Roll);
         }
 
-        public double Yaw
-        {
+        public double Yaw {
             get => _yaw;
-            set
-            {
+            set {
                 _yaw = (float) value;
                 RQuat = Quaternion.Euler(-_pitch, _yaw, _roll);
             }
         }
 
-        public double Pitch
-        {
+        public double Pitch {
             get => _pitch;
-            set
-            {
+            set {
                 _pitch = (float) value;
                 RQuat = Quaternion.Euler(-_pitch, _yaw, _roll);
             }
         }
 
-        public double Roll
-        {
+        public double Roll {
             get => _roll;
-            set
-            {
+            set {
                 _roll = (float) value;
                 RQuat = Quaternion.Euler(-_pitch, _yaw, _roll);
             }

@@ -1,16 +1,14 @@
 ﻿using AircraftSimulator;
 using UnityEngine;
 
-public class SimulatorComponent : MonoBehaviour
-{
+public class SimulatorComponent : MonoBehaviour {
     public GameObject AircraftInstance;
     private Aircraft _aircraft;
 
     private Simulator _simulator;
 
     // Start is called before the first frame update
-    private void Start()
-    {
+    private void Start() {
         _aircraft = new Aircraft(
             new Vector3(AircraftInstance.transform.position.x, AircraftInstance.transform.position.y,
                 AircraftInstance.transform.position.z), new Rotation(0, 20, 0));
@@ -22,8 +20,7 @@ public class SimulatorComponent : MonoBehaviour
     }
 
     // Update is called once per frame
-    private void Update()
-    {
+    private void Update() {
         var timeStep = Time.deltaTime;
         if (_aircraft.Position.y > 0) _simulator.Update(timeStep * 5);
         AircraftInstance.transform.position = ConvertVector(_aircraft.Position);
@@ -33,8 +30,7 @@ public class SimulatorComponent : MonoBehaviour
         AircraftInstance.transform.rotation = _aircraft.Rotation.RQuat;
     }
 
-    private Vector3 ConvertVector(Vector3 vector)
-    {
+    private Vector3 ConvertVector(Vector3 vector) {
         return new Vector3(vector.x, vector.y, vector.z);
     }
 }

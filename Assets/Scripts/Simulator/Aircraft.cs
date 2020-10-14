@@ -1,16 +1,11 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-//using System.Numerics;
-
-namespace AircraftSimulator
-{
-    internal class Aircraft
-    {
+namespace AircraftSimulator {
+    internal class Aircraft {
         public List<Component> Components;
 
-        public Aircraft(Vector3 initialPosition, Rotation rotation)
-        {
+        public Aircraft(Vector3 initialPosition, Rotation rotation) {
             Rotation = rotation;
             Components = new List<Component>();
             Position = initialPosition;
@@ -21,8 +16,7 @@ namespace AircraftSimulator
 
         public double Mass => EvaluateMass();
 
-        private double EvaluateMass()
-        {
+        private double EvaluateMass() {
             double sum = 0;
             foreach (var component in Components) sum += component.Mass;
 

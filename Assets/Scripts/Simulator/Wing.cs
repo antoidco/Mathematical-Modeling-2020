@@ -1,12 +1,9 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace AircraftSimulator
-{
-    public class Wing : Component
-    {
-        public Wing(Vector3 relativePosition, Quaternion rotation, double mass, Vector3 drag)
-        {
+namespace AircraftSimulator {
+    public class Wing : Component {
+        public Wing(Vector3 relativePosition, Quaternion rotation, double mass, Vector3 drag) {
             RelativePosition = relativePosition;
             Rotation = rotation;
             Drag = drag;
