@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Numerics;
+using UnityEngine;
 
 namespace AircraftSimulator {
-    class Program {
+    internal class Program {
         /*
         static void Main(string[] args) {
             Console.WriteLine(GetPlaneMassExample());
@@ -20,13 +20,13 @@ namespace AircraftSimulator {
 
         private static void SimulationExample(float timeStep) {
             var aircraft = new Aircraft(new Vector3(0, 0, 250), new Rotation());
-            var engine1 = new Engine(10, "Engine 1", Vector3.Zero);
+            var engine1 = new Engine(10, "Engine 1", Vector3.zero);
             aircraft.Components.Add(engine1);
             engine1.CurrentPower = 40;
             var simulator =
                 new Simulator(aircraft, new Weather(new Wind(new ConstantWindModel(new Vector3(1, 2, 3))))); // lol
 
-            while (aircraft.Position.Z > 0) {
+            while (aircraft.Position.z > 0) {
                 simulator.Update(timeStep);
                 Console.WriteLine(aircraft.Position.ToString());
             }
