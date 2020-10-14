@@ -7,8 +7,8 @@ namespace AircraftSimulator {
         public Vector3 Position { get; set; }
         public List<Component> Components;
 
-        public Aircraft(Vector3 initialPosition, Rotation rotation) {
-            Rotation = rotation;
+        public Aircraft(Vector3 initialPosition, Quaternion quaternion) {
+            Rotation = new Rotation(quaternion);
             Components = new List<Component>();
             Position = initialPosition;
         }

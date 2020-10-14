@@ -4,26 +4,28 @@ namespace AircraftSimulator {
     public class Rotation {
         // todo: Replace with Quaternion
         private float _yaw, _pitch, _roll;
+        private Quaternion _quaternion;
 
-        public Rotation(double yaw, double pitch, double roll) {
-            Yaw = yaw;
-            Pitch = pitch;
-            Roll = roll;
-            RQuat = Quaternion.Euler(-(float) Pitch, (float) Yaw, (float) Roll);
+        public Rotation(float yaw, float pitch, float roll) {
+            _yaw = yaw;
+            _pitch = pitch;
+            _roll = roll;
+            _quaternion = Quaternion.Euler(-_pitch,  _yaw,  _roll);
+        }
+        public Rotation(Quaternion quaternion) {
+            Yaw = quaternion.eulerAngles.y;
+            Pitch = -quaternion.eulerAngles.x;
+            Roll = quaternion.eulerAngles.z;
+            _quaternion = quaternion;
         }
 
-        public Rotation() {
-            Yaw = 0;
-            Pitch = 0;
-            Roll = 0;
-            RQuat = Quaternion.Euler(-(float) Pitch, (float) Yaw, (float) Roll);
-        }
+        public Rotation() : this(0, 0, 0) { }
 
         public double Yaw {
             get => _yaw;
             set {
                 _yaw = (float) value;
-                RQuat = Quaternion.Euler(-_pitch, _yaw, _roll);
+                _quaternion = Quaternion.Euler(-_pitch, _yaw, _roll);
             }
         }
 
@@ -31,7 +33,7 @@ namespace AircraftSimulator {
             get => _pitch;
             set {
                 _pitch = (float) value;
-                RQuat = Quaternion.Euler(-_pitch, _yaw, _roll);
+                _quaternion = Quaternion.Euler(-_pitch, _yaw, _roll);
             }
         }
 
@@ -39,10 +41,18 @@ namespace AircraftSimulator {
             get => _roll;
             set {
                 _roll = (float) value;
-                RQuat = Quaternion.Euler(-_pitch, _yaw, _roll);
+                _quaternion = Quaternion.Euler(-_pitch, _yaw, _roll);
             }
         }
 
-        public Quaternion RQuat { get; set; }
+        public Quaternion Quaternion {
+            get => _quaternion;
+            set {
+                _quaternion = value;
+                _pitch = -_quaternion.eulerAngles.x;
+                _yaw = _quaternion.eulerAngles.y;
+                _roll = _quaternion.eulerAngles.z;
+            }
+        }
     }
 }

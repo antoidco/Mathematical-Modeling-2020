@@ -4,9 +4,10 @@ namespace AircraftSimulator.Physics {
     public abstract class PhysicsModel : Model {
         protected AircraftState PreviousState;
         protected AircraftState CurrentState;
-        protected float DeltaTime;
+        protected Aircraft Aircraft;
         
         public PhysicsModel(Aircraft aircraft, Vector3 initialVelocity) : base(ModelType.Physics) {
+            Aircraft = aircraft;
             CurrentState = new AircraftState();
             CurrentState.U = initialVelocity.x;
             CurrentState.V = initialVelocity.y;
@@ -19,7 +20,17 @@ namespace AircraftSimulator.Physics {
             PreviousState = CurrentState;
         }
 
-        public virtual void Evaluate(ControlData control) { }
+        protected virtual void Evaluate(ControlData control, float deltaTime) { }
+
+        public void Update(ControlData control, float deltaTime) {
+            Evaluate(control, deltaTime);
+            UpdateAircraft();
+        }
+
+        private void UpdateAircraft() {
+            Aircraft.Position += new Vector3(CurrentState.U, CurrentState.V, CurrentState.W);
+            Aircraft.Rotation.Quaternion *= (new Rotation(CurrentState.Roll, CurrentState.Pitch, CurrentState.Yaw)).Quaternion; 
+        }
 
         public struct AircraftState {
             public float U, V, W;

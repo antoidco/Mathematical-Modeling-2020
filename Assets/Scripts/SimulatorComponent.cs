@@ -9,9 +9,7 @@ public class SimulatorComponent : MonoBehaviour {
 
     // Start is called before the first frame update
     private void Start() {
-        _aircraft = new Aircraft(
-            new Vector3(AircraftInstance.transform.position.x, AircraftInstance.transform.position.y,
-                AircraftInstance.transform.position.z), new Rotation(0, 20, 0));
+        _aircraft = new Aircraft(AircraftInstance.transform.position, AircraftInstance.transform.rotation);
         var engine1 = new Engine(10, "Engine 1", Vector3.zero);
         _aircraft.Components.Add(engine1);
         engine1.CurrentPower = 200;
@@ -22,13 +20,13 @@ public class SimulatorComponent : MonoBehaviour {
     // Update is called once per frame
     private void Update() {
         var timeStep = Time.deltaTime;
-        if (_aircraft.Position.y > 0) _simulator.Update(timeStep * 5);
+        _simulator.Update(timeStep);
 
         AircraftInstance.transform.position = ConvertVector(_aircraft.Position);
         _aircraft.Rotation.Pitch = 10 * Mathf.Sin(Mathf.Sin(Time.time));
         //To View plane flying uncomment this line
-        // _aircraft.Rotation.Pitch = 50;
-        AircraftInstance.transform.rotation = _aircraft.Rotation.RQuat;
+        _aircraft.Rotation.Pitch = 50;
+        AircraftInstance.transform.rotation = _aircraft.Rotation.Quaternion;
     }
 
     private Vector3 ConvertVector(Vector3 vector) {
