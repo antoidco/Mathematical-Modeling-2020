@@ -1,4 +1,4 @@
-﻿using AircraftSimulator;
+using AircraftSimulator;
 using UnityEngine;
 
 public class SimulatorComponent : MonoBehaviour {
@@ -23,6 +23,7 @@ public class SimulatorComponent : MonoBehaviour {
     private void Update() {
         var timeStep = Time.deltaTime;
         if (_aircraft.Position.y > 0) _simulator.Update(timeStep * 5);
+
         AircraftInstance.transform.position = ConvertVector(_aircraft.Position);
         _aircraft.Rotation.Pitch = 10 * Mathf.Sin(Mathf.Sin(Time.time));
         //To View plane flying uncomment this line

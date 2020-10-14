@@ -1,5 +1,6 @@
 ﻿namespace AircraftSimulator {
     public enum ModelType {
-        Wind
+        Wind,
+        Physics
     }
 }
