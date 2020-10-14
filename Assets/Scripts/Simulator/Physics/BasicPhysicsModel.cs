@@ -19,6 +19,7 @@ namespace AircraftSimulator.Physics {
 
             float FxG = 0, FxA= 0, FxT = 0, FyA = 0, FyG = 0, FyT = 0, FzG = 0, FzA = 0, FzT = 0;
             FzG = Simulator.GravityConstant;
+            FxT = control.AileronAngle;
             
             CurrentState.U = U + DeltaTime * (R * V - Q * W - FxG / m + FxA / m + FxT / m);
             CurrentState.V = V + DeltaTime * (-R * U + P * W + FyG / m + FyA / m + FyT / m);
