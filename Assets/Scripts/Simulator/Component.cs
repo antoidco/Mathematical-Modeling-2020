@@ -1,7 +1,9 @@
-﻿using System.Numerics;
+﻿using UnityEngine;
 
-namespace AircraftSimulator {
-    public abstract class Component {
+namespace AircraftSimulator
+{
+    public abstract class Component
+    {
         public double Mass { get; set; }
         public string Name { get; set; }
         public Vector3 RelativePosition { get; set; }
