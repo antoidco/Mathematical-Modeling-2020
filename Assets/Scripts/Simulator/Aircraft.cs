@@ -2,7 +2,7 @@
 using System.Numerics;
 
 namespace AircraftSimulator {
-    class Aircraft {
+    public class Aircraft {
         public Rotation Rotation { get; set; }
         public Vector3 Position { get; set; }
         public List<Component> Components;
