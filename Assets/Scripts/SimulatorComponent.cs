@@ -1,10 +1,12 @@
 using AircraftSimulator;
+using AircraftSimulator.Physics;
 using UnityEngine;
 
 public class SimulatorComponent : MonoBehaviour {
     public GameObject AircraftInstance;
     private Aircraft _aircraft;
     private Simulator _simulator;
+    public AircraftControllerComponent controller;
 
     // Start is called before the first frame update
     private void Start() {
@@ -19,7 +21,8 @@ public class SimulatorComponent : MonoBehaviour {
     // Update is called once per frame
     private void Update() {
         var timeStep = Time.deltaTime;
-        _simulator.Update(timeStep);
+        var controlData = controller.GetControlData();
+        _simulator.Update(timeStep, controlData);
 
         AircraftInstance.transform.position = _aircraft.Position;
         AircraftInstance.transform.rotation = _aircraft.Rotation.Quaternion;

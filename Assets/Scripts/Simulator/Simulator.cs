@@ -20,10 +20,10 @@ namespace AircraftSimulator {
             _physicsModel = new BasicPhysicsModel(_aircraft, UnityEngine.Vector3.zero);
         }
 
-        public void Update(double timeStep) {
+        public void Update(double timeStep, PhysicsModel.ControlData controlData) {
             Time += timeStep;
 
-            _physicsModel.Update(new PhysicsModel.ControlData(), (float) timeStep);
+            _physicsModel.Update(controlData, (float) timeStep);
         }
     }
 }

@@ -31,13 +31,17 @@ namespace AircraftSimulator.Physics {
 
         private void UpdateAircraft(float deltaTime) {
             Aircraft.Position += deltaTime * new Vector3(CurrentState.U, CurrentState.V, CurrentState.W);
-            Aircraft.Rotation.Quaternion *= (new Rotation(CurrentState.RollRate * deltaTime,
-                CurrentState.PitchRate * deltaTime, CurrentState.YawRate * deltaTime)).Quaternion;
+            CurrentState.Roll = CurrentState.RollRate * deltaTime;
+            CurrentState.Pitch = CurrentState.PitchRate * deltaTime;
+            CurrentState.Yaw = CurrentState.YawRate * deltaTime;
+            Aircraft.Rotation.Quaternion *= (new Rotation(CurrentState.Yaw, CurrentState.Pitch, CurrentState.Roll)).Quaternion;
         }
 
         public struct AircraftState {
             public float U, V, W;
             public float RollRate, PitchRate, YawRate;
+
+            public float Roll, Pitch, Yaw;
         }
 
         public struct ControlData {
