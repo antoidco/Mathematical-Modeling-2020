@@ -4,7 +4,6 @@ using UnityEngine;
 public class SimulatorComponent : MonoBehaviour {
     public GameObject AircraftInstance;
     private Aircraft _aircraft;
-
     private Simulator _simulator;
 
     // Start is called before the first frame update
@@ -22,13 +21,7 @@ public class SimulatorComponent : MonoBehaviour {
         var timeStep = Time.deltaTime;
         _simulator.Update(timeStep);
 
-        AircraftInstance.transform.position = ConvertVector(_aircraft.Position);
-        _aircraft.Rotation.Pitch = 10 * Mathf.Sin(Mathf.Sin(Time.time)); // todo: delete this line!
-        
+        AircraftInstance.transform.position = _aircraft.Position;
         AircraftInstance.transform.rotation = _aircraft.Rotation.Quaternion;
-    }
-
-    private Vector3 ConvertVector(Vector3 vector) {
-        return new Vector3(vector.x, vector.y, vector.z);
     }
 }

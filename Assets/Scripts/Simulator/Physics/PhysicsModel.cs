@@ -5,7 +5,7 @@ namespace AircraftSimulator.Physics {
         protected AircraftState PreviousState;
         protected AircraftState CurrentState;
         protected Aircraft Aircraft;
-        
+
         public PhysicsModel(Aircraft aircraft, Vector3 initialVelocity) : base(ModelType.Physics) {
             Aircraft = aircraft;
             CurrentState = new AircraftState();
@@ -13,9 +13,9 @@ namespace AircraftSimulator.Physics {
             CurrentState.V = initialVelocity.y;
             CurrentState.W = initialVelocity.z;
 
-            CurrentState.Roll = (float) aircraft.Rotation.Roll;
-            CurrentState.Yaw = (float) aircraft.Rotation.Yaw;
-            CurrentState.Pitch = (float) aircraft.Rotation.Pitch;
+            CurrentState.RollRate = 0;
+            CurrentState.YawRate = 0;
+            CurrentState.PitchRate = 0;
 
             PreviousState = CurrentState;
         }
@@ -24,17 +24,20 @@ namespace AircraftSimulator.Physics {
 
         public void Update(ControlData control, float deltaTime) {
             Evaluate(control, deltaTime);
-            UpdateAircraft();
+            UpdateAircraft(deltaTime);
+
+            PreviousState = CurrentState;
         }
 
-        private void UpdateAircraft() {
-            Aircraft.Position += new Vector3(CurrentState.U, CurrentState.V, CurrentState.W);
-            Aircraft.Rotation.Quaternion *= (new Rotation(CurrentState.Roll, CurrentState.Pitch, CurrentState.Yaw)).Quaternion; 
+        private void UpdateAircraft(float deltaTime) {
+            Aircraft.Position += deltaTime * new Vector3(CurrentState.U, CurrentState.V, CurrentState.W);
+            Aircraft.Rotation.Quaternion *= (new Rotation(CurrentState.RollRate * deltaTime,
+                CurrentState.PitchRate * deltaTime, CurrentState.YawRate * deltaTime)).Quaternion;
         }
 
         public struct AircraftState {
             public float U, V, W;
-            public float Roll, Pitch, Yaw;
+            public float RollRate, PitchRate, YawRate;
         }
 
         public struct ControlData {
