@@ -7,16 +7,17 @@ public class AircraftControllerComponent : MonoBehaviour {
     private float _aileronControl;
     private float _elevatorControl;
     private float _rudderControl;
+    private float _engineControl;
 
     private void Start() {
         _aileronControl = 0f;
         _elevatorControl = 0f;
         _rudderControl = 0f;
+        _engineControl = 0.5f; // todo: get these values from sliders!!!
     }
     
     public void OnAileronChange(System.Single value) {
         _aileronControl = value;
-        Debug.Log("Aileron angle changed: " + value);
     }
     
     public void OnElevatorChange(System.Single value) {
@@ -27,11 +28,16 @@ public class AircraftControllerComponent : MonoBehaviour {
         _rudderControl = value;
     }
 
-    public PhysicsModel.ControlData GetControlData() {
-        var data = new PhysicsModel.ControlData();
+    public void OnEngineChange(System.Single value) {
+        _engineControl = value;
+    }
+
+    public ControlData GetControlData() {
+        var data = new ControlData();
         data.AileronAngle = _aileronControl;
         data.ElevatorAngle = _elevatorControl;
         data.RudderAngle = _rudderControl;
+        data.Power = _engineControl;
         return data;
     }
 }

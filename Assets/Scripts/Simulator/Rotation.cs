@@ -10,7 +10,7 @@ namespace AircraftSimulator {
             _yaw = yaw;
             _pitch = pitch;
             _roll = roll;
-            _quaternion = Quaternion.Euler(-_pitch,  _yaw,  _roll);
+            _quaternion = Quaternion.Euler(_pitch,  -_roll,  _yaw);
         }
         public Rotation(Quaternion quaternion) {
             Yaw = quaternion.eulerAngles.y;
@@ -22,26 +22,26 @@ namespace AircraftSimulator {
         public Rotation() : this(0, 0, 0) { }
 
         public double Yaw {
-            get => _yaw;
+            get => Clamp180(_yaw);
             set {
                 _yaw = (float) value;
-                _quaternion = Quaternion.Euler(-_pitch, _yaw, _roll);
+                _quaternion = Quaternion.Euler(_pitch, -_roll, _yaw);
             }
         }
 
         public double Pitch {
-            get => _pitch;
+            get => Clamp180(_pitch);
             set {
                 _pitch = (float) value;
-                _quaternion = Quaternion.Euler(-_pitch, _yaw, _roll);
+                _quaternion = Quaternion.Euler(_pitch, -_roll, _yaw);
             }
         }
 
         public double Roll {
-            get => _roll;
+            get => Clamp180(_roll);
             set {
                 _roll = (float) value;
-                _quaternion = Quaternion.Euler(-_pitch, _yaw, _roll);
+                _quaternion = Quaternion.Euler(_pitch, -_roll, _yaw);
             }
         }
 
@@ -49,10 +49,18 @@ namespace AircraftSimulator {
             get => _quaternion;
             set {
                 _quaternion = value;
-                _pitch = -_quaternion.eulerAngles.x;
-                _yaw = _quaternion.eulerAngles.y;
-                _roll = _quaternion.eulerAngles.z;
+                _pitch = _quaternion.eulerAngles.x;
+                _roll = -_quaternion.eulerAngles.y;
+                _yaw = _quaternion.eulerAngles.z;
             }
+        }
+
+        private float Clamp180(float value) {
+            if (Mathf.Abs(value) > 180f) {
+                if (value < 0) return value + 360f;
+                return value - 360f;
+            }
+            return value;
         }
     }
 }

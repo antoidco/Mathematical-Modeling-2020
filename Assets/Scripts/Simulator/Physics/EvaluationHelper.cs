@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace AircraftSimulator.Physics {
     public class EvaluationHelper {
@@ -10,6 +11,14 @@ namespace AircraftSimulator.Physics {
                 }
             }
             return result;
+        }
+        public static float ClampByModule(float value, float module) {
+            if (Math.Abs(value) > module) {
+                return Math.Sign(value) * module;
+            }
+            else {
+                return value;
+            }
         }
     }
 

@@ -20,10 +20,10 @@ namespace AircraftSimulator.Physics {
             PreviousState = CurrentState;
         }
 
-        protected virtual void Evaluate(ControlData control, float deltaTime) { }
+        protected virtual void PerformStep(ControlData control, float deltaTime) { }
 
         public void Update(ControlData control, float deltaTime) {
-            Evaluate(control, deltaTime);
+            PerformStep(control, deltaTime);
             UpdateAircraft(deltaTime);
 
             PreviousState = CurrentState;
@@ -31,24 +31,10 @@ namespace AircraftSimulator.Physics {
 
         private void UpdateAircraft(float deltaTime) {
             Aircraft.Position += deltaTime * new Vector3(CurrentState.U, CurrentState.V, CurrentState.W);
-            CurrentState.Roll = CurrentState.RollRate * deltaTime;
-            CurrentState.Pitch = CurrentState.PitchRate * deltaTime;
-            CurrentState.Yaw = CurrentState.YawRate * deltaTime;
-            Aircraft.Rotation.Quaternion *= (new Rotation(CurrentState.Yaw, CurrentState.Pitch, CurrentState.Roll)).Quaternion;
-        }
-
-        public struct AircraftState {
-            public float U, V, W;
-            public float RollRate, PitchRate, YawRate;
-
-            public float Roll, Pitch, Yaw;
-        }
-
-        public struct ControlData {
-            public float Power;
-            public float AileronAngle;
-            public float RudderAngle;
-            public float ElevatorAngle;
+            var newYaw = CurrentState.YawRate * deltaTime;
+            var newPitch = CurrentState.PitchRate * deltaTime;
+            var newRoll = CurrentState.RollRate * deltaTime;
+            Aircraft.Rotation.Quaternion *= (new Rotation(newYaw, newPitch, newRoll)).Quaternion;
         }
     }
 }
