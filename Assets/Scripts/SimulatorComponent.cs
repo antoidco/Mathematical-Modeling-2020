@@ -23,9 +23,8 @@ public class SimulatorComponent : MonoBehaviour {
         _simulator.Update(timeStep);
 
         AircraftInstance.transform.position = ConvertVector(_aircraft.Position);
-        _aircraft.Rotation.Pitch = 10 * Mathf.Sin(Mathf.Sin(Time.time));
-        //To View plane flying uncomment this line
-        _aircraft.Rotation.Pitch = 50;
+        _aircraft.Rotation.Pitch = 10 * Mathf.Sin(Mathf.Sin(Time.time)); // todo: delete this line!
+        
         AircraftInstance.transform.rotation = _aircraft.Rotation.Quaternion;
     }
 
