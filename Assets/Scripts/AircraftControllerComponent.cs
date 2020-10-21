@@ -1,7 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using AircraftSimulator.Physics;
+﻿using AircraftSimulator.Physics;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class AircraftControllerComponent : MonoBehaviour {
     private float _aileronControl;
@@ -9,13 +8,22 @@ public class AircraftControllerComponent : MonoBehaviour {
     private float _rudderControl;
     private float _engineControl;
 
+    public Slider aileronSlider;
+    public Slider elevatorSlider;
+    public Slider rudderSlider;
+    public Slider engineSlider;
+
     private void Start() {
-        _aileronControl = 0f;
-        _elevatorControl = 0f;
-        _rudderControl = 0f;
-        _engineControl = 0.5f; // todo: get these values from sliders!!!
+        _aileronControl = aileronSlider.value;
+        _elevatorControl = elevatorSlider.value;
+        _rudderControl = rudderSlider.value;
+        _engineControl = engineSlider.value; // todo: get these values from sliders!!!
+
+        aileronSlider.onValueChanged.AddListener(OnAileronChange);
+        elevatorSlider.onValueChanged.AddListener(OnElevatorChange);
+        rudderSlider.onValueChanged.AddListener(OnRudderChange);
+        engineSlider.onValueChanged.AddListener(OnEngineChange);
     }
-    
     public void OnAileronChange(System.Single value) {
         _aileronControl = value;
     }

@@ -30,7 +30,9 @@ namespace AircraftSimulator.Physics {
         }
 
         private void UpdateAircraft(float deltaTime) {
-            Aircraft.Position += deltaTime * new Vector3(CurrentState.U, CurrentState.V, CurrentState.W);
+            var localVelocity = new Vector3(CurrentState.U, CurrentState.V, CurrentState.W);
+            var globalVelocity = Aircraft.Rotation.Quaternion * localVelocity;
+            Aircraft.Position += deltaTime * globalVelocity;
             var newYaw = CurrentState.YawRate * deltaTime;
             var newPitch = CurrentState.PitchRate * deltaTime;
             var newRoll = CurrentState.RollRate * deltaTime;

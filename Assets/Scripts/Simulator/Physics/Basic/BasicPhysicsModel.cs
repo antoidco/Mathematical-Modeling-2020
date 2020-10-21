@@ -42,16 +42,10 @@ namespace AircraftSimulator.Physics.Basic {
             }
 
             // evaluate current state
-            Debug.Log((float) Aircraft.Rotation.Roll);
-            CurrentState.U = Mathf.Min(30f,
-                deltaTime * EvaluationHelper.ClampByModule((float) Aircraft.Rotation.Roll * _data.AileronTurnRate,
-                    _data.MaxTurn)
-                + deltaTime * EvaluationHelper.ClampByModule((float) Aircraft.Rotation.Yaw * _data.RudderTurnRate,
-                    _data.MaxTurn));
-            CurrentState.V = V + deltaTime * totalPower / m - deltaTime * Mathf.Abs(control.AileronAngle) * _data.AileronTurnRate;
-            CurrentState.W = Mathf.Min(10f,
-                W + deltaTime * Simulator.GravityConstant +
-                deltaTime * control.ElevatorAngle * _data.ElevatorTurnRate * totalPower);
+            // this is not physics!!!
+            CurrentState.U = 0;
+            CurrentState.V = totalPower;
+            CurrentState.W += deltaTime * Simulator.GravityConstant * 0.1f;
             CurrentState.RollRate = P;
             CurrentState.PitchRate = Q;
             CurrentState.YawRate = R;

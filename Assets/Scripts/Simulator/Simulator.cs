@@ -5,7 +5,7 @@ using AircraftSimulator.Physics.Basic;
 
 namespace AircraftSimulator {
     // todo: refactor this
-    internal class Simulator {
+    public class Simulator {
         public const float GravityConstant = -9.81f;
         private readonly Aircraft _aircraft;
         private Weather _weather;
@@ -20,9 +20,13 @@ namespace AircraftSimulator {
             _weather = weather;
             _physicsModel = new BasicPhysicsModel(_aircraft, Vector3.zero,
                 new BasicPhysicsModelData {
-                    ControlRate = 10f, DeadZone = 0.1f, Lerp = 0.01f, MaxTurn = 4.5f, AileronTurnRate = 0.8f,
-                    ElevatorTurnRate = 1f, RudderTurnRate = 0.1f
+                    ControlRate = 10f, DeadZone = 0.2f, Lerp = 0.03f, MaxTurn = 15.0f, AileronTurnRate = 300f,
+                    ElevatorTurnRate = 3f, RudderTurnRate = 100f
                 });
+        }
+
+        public void Restart(float height) {
+            _aircraft.Position = new Vector3(0, 0, height);
         }
 
         public void Update(double timeStep, ControlData controlData) {

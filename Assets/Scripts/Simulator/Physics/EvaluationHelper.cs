@@ -16,9 +16,7 @@ namespace AircraftSimulator.Physics {
             if (Math.Abs(value) > module) {
                 return Math.Sign(value) * module;
             }
-            else {
-                return value;
-            }
+            return value;
         }
     }
 
