@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using AircraftSimulator.Physics;
 using AircraftSimulator.Physics.Basic;
+using AircraftSimulator.Physics.IlyaAntonov;
 
 namespace AircraftSimulator {
     // todo: refactor this
@@ -18,11 +19,14 @@ namespace AircraftSimulator {
             Time = 0;
             _aircraft = aircraft;
             _weather = weather;
+            /*
             _physicsModel = new BasicPhysicsModel(_aircraft, Vector3.zero,
                 new BasicPhysicsModelData {
                     ControlRate = 10f, DeadZone = 0.2f, Lerp = 0.03f, MaxTurn = 15.0f, AileronTurnRate = 300f,
                     ElevatorTurnRate = 3f, RudderTurnRate = 100f
                 });
+            */
+            _physicsModel = new IlyaAntonovModel(_aircraft, Vector3.zero);
         }
 
         public void Restart(float height) {
