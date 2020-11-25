@@ -3,11 +3,13 @@
 namespace AircraftSimulator.Physics.IgorGruzdev{
     public class IgorGruzdevModel : PhysicsModel{
         private IgorGruzdevModelData _data;
+        private Weather _weather; // lets cache weather to use it later !
         public IgorGruzdevModel(Aircraft aircraft, Vector3 initialVelocity, Weather weather, IgorGruzdevModelData data) : base(aircraft, initialVelocity) {
             _data = data;
+            _weather = weather;
         }
 
-        public Vector3 Position { get; private set; }
+        //public Vector3 Position { get; private set; } // bad! 
 
         protected override void PerformStep(ControlData control, float deltaTime)
         {
@@ -33,7 +35,7 @@ namespace AircraftSimulator.Physics.IgorGruzdev{
             float W = PreviousState.W;
             float m = (float)Aircraft.Mass;
 
-            Position = Aircraft.Position;
+            var position = Aircraft.Position; // good! you only need this position locally (not globally)
 
             float totalPower = 0;
             foreach (var component in Aircraft.Components)
@@ -72,7 +74,15 @@ namespace AircraftSimulator.Physics.IgorGruzdev{
             CurrentState.YawRate = R;
 
             var vel = (CurrentState.V - V)/deltaTime;
-            Debug.Log(vel.ToString()); ;
+            Debug.Log(vel);
+
+            var globalTime = 0; // suddenly, we do not know global time, I need to implement it later...
+            // however, your Turbulent Wind Model is also not using global time for now, so let it be zero
+            
+            var velocityOfWind =
+                _weather.Wind.Value(position, globalTime); // here I use aircraft position to obtain wind velocity
+            
+            Debug.Log(velocityOfWind);
         }
     }
 }
