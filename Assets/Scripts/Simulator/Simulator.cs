@@ -3,7 +3,6 @@ using UnityEngine;
 using AircraftSimulator.Physics;
 using AircraftSimulator.Physics.Basic;
 using AircraftSimulator.Physics.IgorGruzdev;
-//using Assets.Scripts.Simulator.Physics.IgorGruzdev;
 
 namespace AircraftSimulator {
     // todo: refactor this
@@ -27,7 +26,17 @@ namespace AircraftSimulator {
                     ElevatorTurnRate = 3f, RudderTurnRate = 100f
                 });
             */
-            _physicsModel = new IgorGruzdevModel(_aircraft, Vector3.zero);
+            _physicsModel = new IgorGruzdevModel(_aircraft, Vector3.zero, _weather,
+                new IgorGruzdevModelData
+                {
+                    ControlRate = 10f,
+                    DeadZone = 0.2f,
+                    Lerp = 0.03f,
+                    MaxTurn = 15.0f,
+                    AileronTurnRate = 300f,
+                    ElevatorTurnRate = 3f,
+                    RudderTurnRate = 100f
+                }) ;
         }
 
         public void Restart(float height) {
