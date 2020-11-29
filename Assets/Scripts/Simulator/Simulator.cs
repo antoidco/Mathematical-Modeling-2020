@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 using AircraftSimulator.Physics;
-using AircraftSimulator.Physics.Basic;
+using AircraftSimulator.Physics.MariaRybakonenko;
 
 namespace AircraftSimulator {
     // todo: refactor this
@@ -17,11 +17,23 @@ namespace AircraftSimulator {
         public Simulator(Aircraft aircraft, Weather weather) {
             Time = 0;
             _aircraft = aircraft;
-            _weather = weather;
+            _weather = weather; /*
             _physicsModel = new BasicPhysicsModel(_aircraft, Vector3.zero,
                 new BasicPhysicsModelData {
                     ControlRate = 10f, DeadZone = 0.2f, Lerp = 0.03f, MaxTurn = 15.0f, AileronTurnRate = 300f,
                     ElevatorTurnRate = 3f, RudderTurnRate = 100f
+                });*/
+            _physicsModel = new MariaRybakonenkoModel(_aircraft, Vector3.zero,
+                new MariaRybakonenkoModelData
+                {
+                    ControlRate = 10f,
+                    DeadZone = 0.2f,
+                    Lerp = 0.03f,
+                    MaxTurn = 15.0f,
+                    AileronTurnRate = 300f,
+                    ElevatorTurnRate = 3f,
+                    RudderTurnRate = 100f,
+                    WindTurnRate = 1f
                 });
         }
 
