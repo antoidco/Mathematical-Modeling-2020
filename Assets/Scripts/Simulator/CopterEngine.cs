@@ -28,5 +28,10 @@ namespace AircraftSimulator.Physics
             var localForce = new Vector3(0, 0, (float) CurrentPower);
             return quat * localForce;
         }
+
+        public float LiftConstant()
+        {
+            return _liftConstant;
+        }
     }
 }
