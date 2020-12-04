@@ -32,13 +32,14 @@ namespace AircraftSimulator
         public void Restart(float height)
         {
             _aircraft.Position = new Vector3(0, 0, height);
+            _physicsModel.Restart(Vector3.zero);
         }
 
         public void Update(double timeStep, ControlData controlData)
         {
             Time += timeStep;
 
-            _physicsModel.Update(controlData, (float) timeStep, _aircraft.Rotation);
+            _physicsModel.Update(controlData, (float) timeStep);
         }
     }
 }

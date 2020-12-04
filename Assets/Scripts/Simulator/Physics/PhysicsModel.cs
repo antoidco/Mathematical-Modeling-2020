@@ -11,27 +11,14 @@ namespace AircraftSimulator.Physics
         public PhysicsModel(Aircraft aircraft, Vector3 initialVelocity) : base(ModelType.Physics)
         {
             Aircraft = aircraft;
-            CurrentState = new AircraftState();
-            CurrentState.U = initialVelocity.x;
-            CurrentState.V = initialVelocity.y;
-            CurrentState.W = initialVelocity.z;
-
-            CurrentState.RollRate = 0;
-            CurrentState.YawRate = 0;
-            CurrentState.PitchRate = 0;
-
-            PreviousState = CurrentState;
+            Restart(initialVelocity);
         }
 
         protected virtual void PerformStep(ControlData control, float deltaTime)
         {
         }
 
-        protected virtual void PerformStep(ControlData control, float deltaTime, Rotation currentRot)
-        {
-        }
-
-        public void Update(ControlData control, float deltaTime, Rotation aircraftRotation)
+        public void Update(ControlData control, float deltaTime)
         {
             PerformStep(control, deltaTime);
             UpdateAircraft(deltaTime);
@@ -48,6 +35,20 @@ namespace AircraftSimulator.Physics
             var newPitch = CurrentState.PitchRate * deltaTime;
             var newRoll = CurrentState.RollRate * deltaTime;
             Aircraft.Rotation.Quaternion *= new Rotation(newYaw, newPitch, newRoll).Quaternion;
+        }
+
+        public void Restart(Vector3 initialVelocity)
+        {
+            CurrentState = new AircraftState();
+            CurrentState.U = initialVelocity.x;
+            CurrentState.V = initialVelocity.y;
+            CurrentState.W = initialVelocity.z;
+
+            CurrentState.RollRate = 0;
+            CurrentState.YawRate = 0;
+            CurrentState.PitchRate = 0;
+
+            PreviousState = CurrentState;
         }
     }
 }

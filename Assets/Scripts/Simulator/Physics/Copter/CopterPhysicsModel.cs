@@ -12,9 +12,9 @@ namespace AircraftSimulator.Physics.Basic
             _data = data;
         }
 
-        protected override void PerformStep(ControlData control, float deltaTime, Rotation currentRot)
+        protected override void PerformStep(ControlData control, float deltaTime)
         {
-            var P = Mathf.Lerp(-Mathf.PI, Mathf.PI, control.AileronAngle);
+            var P = control.AileronAngle;
             var Q = control.ElevatorAngle;
             var R = control.RudderAngle;
 
@@ -24,19 +24,23 @@ namespace AircraftSimulator.Physics.Basic
             var m = (float) Aircraft.Mass;
 
             // engine control
-            float totalPower = 0;
+            var totalPower = new Vector3(0, 0, 0);
             foreach (var component in Aircraft.Components)
-                if (component is Engine engine)
+                if (component is CopterEngine engine)
                 {
                     engine.CurrentPower = engine.MaxPower * control.Power;
-                    totalPower += (float) engine.CurrentPower;
+                    totalPower += engine.GlobalForceVector(Aircraft.Rotation);
                 }
 
+            //linear velocity processing
+            totalPower /= (float) Aircraft.Mass;
+            totalPower += new Vector3(0, 0, Simulator.GravityConstant);
+            totalPower *= deltaTime;
             // evaluate current state
             // this is not physics!!!
-            CurrentState.U = 0;
-            CurrentState.V = totalPower;
-            CurrentState.W += deltaTime * Simulator.GravityConstant * 0.1f;
+            CurrentState.U += totalPower.x;
+            CurrentState.V += totalPower.y;
+            CurrentState.W += totalPower.z;
             CurrentState.RollRate = P;
             CurrentState.PitchRate = Q;
             CurrentState.YawRate = R;
