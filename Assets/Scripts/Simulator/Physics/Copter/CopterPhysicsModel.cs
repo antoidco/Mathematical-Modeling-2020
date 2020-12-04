@@ -5,6 +5,7 @@ namespace AircraftSimulator.Physics.Basic
 {
     public class CopterPhysicsModel : PhysicsModel
     {
+        private readonly Controller _controller;
         private readonly double _dCoef = 5;
         private readonly double _pCoef = 3;
         private CopterPhysicsModelData _data;
@@ -15,6 +16,13 @@ namespace AircraftSimulator.Physics.Basic
         {
             _data = data;
             _stabHeight = Aircraft.Position.z;
+            _controller = new Controller(
+                new PDControl(2.5, 1.5, 0.002),
+                new PDControl(5, 3),
+                new PDControl(5, 3),
+                new PDControl(5, 3),
+                aircraft
+            );
         }
 
         protected override void PerformStep(ControlData control, float deltaTime)
@@ -27,10 +35,18 @@ namespace AircraftSimulator.Physics.Basic
             var V = PreviousState.V;
             var W = PreviousState.W;
             var m = (float) Aircraft.Mass;
-            var desiredSpeed = (control.Power - 0.5f) * 5;
-            if (!control.Stabilize) _stabHeight = Aircraft.Position.z;
-            else desiredSpeed = 0;
-            var thrust = _computeThrust(desiredSpeed, _stabHeight) / 4;
+            var desiredSpeed = (control.Power - 0.5f) * 10;
+            if (!control.Stabilize)
+            {
+                _stabHeight = Aircraft.Position.z;
+                _controller.Reset();
+            }
+            else
+            {
+                desiredSpeed = 0;
+            }
+
+            var thrust = _controller.ComputeThrust(desiredSpeed, _stabHeight, CurrentState) / 4;
 
             // engine control
             var totalPower = new Vector3(0, 0, 0);
@@ -42,6 +58,8 @@ namespace AircraftSimulator.Physics.Basic
                 }
 
             //linear velocity processing
+            var currentSpeed = new Vector3(CurrentState.U, CurrentState.V, CurrentState.W);
+            totalPower += (float) -Aircraft.DragConstant * currentSpeed;
             totalPower /= (float) Aircraft.Mass;
             totalPower += new Vector3(0, 0, Simulator.GravityConstant);
             totalPower *= deltaTime;

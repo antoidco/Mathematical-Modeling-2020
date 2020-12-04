@@ -14,7 +14,9 @@ public class SimulatorComponent : MonoBehaviour
 
     private void Awake()
     {
-        _aircraft = new Aircraft(AircraftInstance.transform.position, AircraftInstance.transform.rotation);
+        _aircraft = new Aircraft(AircraftInstance.transform.position, AircraftInstance.transform.rotation,
+            1.14 * Mathf.Pow(10, -7),
+            new Vector3(0.0625f, 0.0625f, 0.125f));
         var engine1 = new CopterEngine(3, "Engine 1", new Vector3(1, 0, 0), 4000);
         var engine2 = new CopterEngine(3, "Engine 2", new Vector3(0, -1, 0), 4000);
         var engine3 = new CopterEngine(3, "Engine 3", new Vector3(-1, 0, 0), 4000);
