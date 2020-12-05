@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 namespace AircraftSimulator.Physics.Basic
@@ -46,40 +46,43 @@ namespace AircraftSimulator.Physics.Basic
                 desiredSpeed = 0;
             }
 
-            var thrust = _controller.ComputeThrust(desiredSpeed, _stabHeight, CurrentState) / 4;
+            var desiredRot = new Rotation(0, 0, 0);
+            var angularSpeed = new Vector3(0, 0, 0);
 
+            var omega = _controller.ResolveControls(desiredSpeed, _stabHeight, desiredRot,
+                angularSpeed, CurrentState);
             // engine control
-            var totalPower = new Vector3(0, 0, 0);
-            foreach (var component in Aircraft.Components)
-                if (component is CopterEngine engine)
-                {
-                    engine.CurrentPower = Math.Sqrt(thrust / engine.LiftConstant());
-                    totalPower += engine.GlobalForceVector(Aircraft.Rotation);
-                }
-
-            //linear velocity processing
-            var currentSpeed = new Vector3(CurrentState.U, CurrentState.V, CurrentState.W);
-            totalPower += (float) -Aircraft.DragConstant * currentSpeed;
-            totalPower /= (float) Aircraft.Mass;
-            totalPower += new Vector3(0, 0, Simulator.GravityConstant);
-            totalPower *= deltaTime;
+            _applyEngineControl(omega);
+            var linearSpeed = _processLinear(omega, deltaTime);
             // evaluate current state
             // this is not physics!!!
-            CurrentState.U += totalPower.x;
-            CurrentState.V += totalPower.y;
-            CurrentState.W += totalPower.z;
+            CurrentState.U += linearSpeed.x;
+            CurrentState.V += linearSpeed.y;
+            CurrentState.W += linearSpeed.z;
             CurrentState.RollRate = P;
             CurrentState.PitchRate = Q;
             CurrentState.YawRate = R;
         }
 
-        private double _computeThrust(float desiredSpeed, double stabHeight)
+        private Vector3 _processLinear(List<double> omega, float deltaTime)
         {
-            var errP = (stabHeight - Aircraft.Position.z) * _pCoef;
-            var errD = (desiredSpeed - CurrentState.W) * _dCoef;
-            var thrust = (errD + 9.81 + errP) * Aircraft.Mass / (Math.Cos(Math.PI * Aircraft.Rotation.Roll / 180)
-                                                                 * Math.Cos(Math.PI * Aircraft.Rotation.Pitch / 180));
-            return Math.Max(0, thrust);
+            var totalPower = new Vector3(0, 0, 0);
+            var eng = _controller.GetEngines();
+            for (var i = 0; i < 4; i++) totalPower += eng[i].GlobalForceVector(Aircraft.Rotation);
+
+            //linear velocity processing
+            var currentSpeed = new Vector3(CurrentState.U, CurrentState.V, CurrentState.W);
+            totalPower -= (float) Aircraft.DragConstant * currentSpeed;
+            totalPower /= (float) Aircraft.Mass;
+            totalPower += new Vector3(0, 0, Simulator.GravityConstant);
+            totalPower *= deltaTime;
+            return totalPower;
+        }
+
+        private void _applyEngineControl(List<double> omega)
+        {
+            var eng = _controller.GetEngines();
+            for (var i = 0; i < 4; i++) eng[i].CurrentPower = omega[i];
         }
     }
 }
