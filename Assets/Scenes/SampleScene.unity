@@ -716,7 +716,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Rudder
+  m_Text: RollAngle
 --- !u!222 &364806618
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1607,7 +1607,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Elevator
+  m_Text: PitchAngle
 --- !u!222 &829781900
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3238,7 +3238,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Aileron
+  m_Text: YawSpeed
 --- !u!222 &1900695226
 CanvasRenderer:
   m_ObjectHideFlags: 0
