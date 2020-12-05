@@ -66,7 +66,7 @@ namespace AircraftSimulator.Physics.Basic
                 if (Mathf.Pow(-1, i + 1) < 0) Torq12 = coef * (torques.y / (2 * k * L));
                 else Torq12 = coef * (torques.x / (2 * k * L));
                 var omegaSq = thrust / (4 * k) + Torq12 + Mathf.Pow(-1, i + 1) * (torques.z / (4 * b));
-                omega.Add(Mathf.Sqrt((float) omegaSq));
+                omega.Add(Mathf.Sqrt(Mathf.Max((float) omegaSq, 0)));
             }
 
             return omega;

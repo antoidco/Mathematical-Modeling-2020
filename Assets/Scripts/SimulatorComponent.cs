@@ -18,13 +18,13 @@ public class SimulatorComponent : MonoBehaviour
             1.14 * Mathf.Pow(10, -3),
             new Vector3(0.0625f, 0.0625f, 0.125f));
         var engine1 = new CopterEngine(3, "Engine 1",
-            new Vector3(1, 0, 0), 4000, 1.14f * Mathf.Pow(10, -7));
+            new Vector3(1, 0, 0), 4000, 1.14f * Mathf.Pow(10, -5));
         var engine2 = new CopterEngine(3, "Engine 2",
-            new Vector3(0, -1, 0), 4000, 1.14f * Mathf.Pow(10, -7));
+            new Vector3(0, -1, 0), 4000, 1.14f * Mathf.Pow(10, -5));
         var engine3 = new CopterEngine(3, "Engine 3",
-            new Vector3(-1, 0, 0), 4000, 1.14f * Mathf.Pow(10, -7));
+            new Vector3(-1, 0, 0), 4000, 1.14f * Mathf.Pow(10, -5));
         var engine4 = new CopterEngine(3, "Engine 4",
-            new Vector3(0, 1, 0), 4000, 1.14f * Mathf.Pow(10, -7));
+            new Vector3(0, 1, 0), 4000, 1.14f * Mathf.Pow(10, -5));
         _aircraft.Components.Add(engine1);
         _aircraft.Components.Add(engine2);
         _aircraft.Components.Add(engine3);

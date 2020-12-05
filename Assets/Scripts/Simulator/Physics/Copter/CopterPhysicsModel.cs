@@ -6,8 +6,6 @@ namespace AircraftSimulator.Physics.Basic
     public class CopterPhysicsModel : PhysicsModel
     {
         private readonly Controller _controller;
-        private readonly double _dCoef = 5;
-        private readonly double _pCoef = 3;
         private CopterPhysicsModelData _data;
         private double _stabHeight;
 
@@ -18,23 +16,22 @@ namespace AircraftSimulator.Physics.Basic
             _stabHeight = Aircraft.Position.z;
             _controller = new Controller(
                 new PDControl(2.5, 1.5, 0.002),
-                new PDControl(5, 3),
-                new PDControl(5, 3),
-                new PDControl(5, 3),
+                new PDControl(1.75, 6, 0.002),
+                new PDControl(1.75, 6, 0.001),
+                new PDControl(1.75, 6, 0.001),
                 aircraft
             );
         }
 
         protected override void PerformStep(ControlData control, float deltaTime)
         {
-            var P = control.AileronAngle;
-            var Q = control.ElevatorAngle;
-            var R = control.RudderAngle;
+            // Yaw angular velocity
+            var P = control.AileronAngle * 10;
+            // Pitch angle
+            var Q = control.ElevatorAngle * 15;
+            // Roll angle
+            var R = control.RudderAngle * 15;
 
-            var U = PreviousState.U;
-            var V = PreviousState.V;
-            var W = PreviousState.W;
-            var m = (float) Aircraft.Mass;
             var desiredSpeed = (control.Power - 0.5f) * 10;
             if (!control.Stabilize)
             {
@@ -46,25 +43,26 @@ namespace AircraftSimulator.Physics.Basic
                 desiredSpeed = 0;
             }
 
-            var desiredRot = new Rotation(0, 0, 0);
-            var angularSpeed = new Vector3(0, 0, 0);
+            var desiredRot = new Rotation((float) Aircraft.Rotation.Yaw, Q, R);
+            var angularSpeedD = new Vector3(0, 0, P);
 
             var omega = _controller.ResolveControls(desiredSpeed, _stabHeight, desiredRot,
-                angularSpeed, CurrentState);
+                angularSpeedD, CurrentState);
             // engine control
             _applyEngineControl(omega);
-            var linearSpeed = _processLinear(omega, deltaTime);
+            var linearSpeed = _processLinear(deltaTime);
+            var angularSpeed = _processAngular(omega, deltaTime);
             // evaluate current state
             // this is not physics!!!
             CurrentState.U += linearSpeed.x;
             CurrentState.V += linearSpeed.y;
             CurrentState.W += linearSpeed.z;
-            CurrentState.RollRate = P;
-            CurrentState.PitchRate = Q;
-            CurrentState.YawRate = R;
+            CurrentState.RollRate = angularSpeed.x;
+            CurrentState.PitchRate = angularSpeed.y;
+            CurrentState.YawRate = angularSpeed.z;
         }
 
-        private Vector3 _processLinear(List<double> omega, float deltaTime)
+        private Vector3 _processLinear(float deltaTime)
         {
             var totalPower = new Vector3(0, 0, 0);
             var eng = _controller.GetEngines();
@@ -83,6 +81,32 @@ namespace AircraftSimulator.Physics.Basic
         {
             var eng = _controller.GetEngines();
             for (var i = 0; i < 4; i++) eng[i].CurrentPower = omega[i];
+        }
+
+        private Vector3 _processAngular(List<double> omega, float deltaTime)
+        {
+            var eng = _controller.GetEngines();
+            //assuming that all engine params are equal
+            var k = eng[0].LiftConstant;
+            var b = eng[0].PropDrag;
+            var L = eng[0].RelativePosition.magnitude;
+            var torq = _torques(omega, L, b, k);
+            //assuming Ir is equals to zero
+            var angular = Vector3.zero;
+            angular.x = torq.x - Mathf.Pow(CurrentState.RollRate, 2) * Aircraft.Inertia.x;
+            angular.y = torq.y - Mathf.Pow(CurrentState.PitchRate, 2) * Aircraft.Inertia.y;
+            angular.z = torq.z - Mathf.Pow(CurrentState.YawRate, 2) * Aircraft.Inertia.z;
+            return angular;
+        }
+
+        private Vector3 _torques(List<double> omega, float L, float b, float k)
+        {
+            var torq = new Vector3();
+            torq.x = L * k * (Mathf.Pow((float) omega[3], 2) - Mathf.Pow((float) omega[1], 2));
+            torq.y = L * k * (Mathf.Pow((float) omega[2], 2) - Mathf.Pow((float) omega[0], 2));
+            torq.z = b * (Mathf.Pow((float) omega[3], 2) - Mathf.Pow((float) omega[2], 2) +
+                Mathf.Pow((float) omega[1], 2) - Mathf.Pow((float) omega[0], 2));
+            return torq;
         }
     }
 }
