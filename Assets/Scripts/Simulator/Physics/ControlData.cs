@@ -4,7 +4,5 @@
         public float AileronAngle;
         public float RudderAngle;
         public float ElevatorAngle;
-        public float Wind;
-
     }
 }

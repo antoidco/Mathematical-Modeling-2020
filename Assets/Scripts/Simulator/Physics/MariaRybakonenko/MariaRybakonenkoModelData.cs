@@ -10,6 +10,5 @@
         public float AileronTurnRate;
         public float ElevatorTurnRate;
         public float RudderTurnRate;
-        public float WindTurnRate;
     }
 }

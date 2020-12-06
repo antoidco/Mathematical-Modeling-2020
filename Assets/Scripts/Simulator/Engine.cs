@@ -2,22 +2,26 @@
 using UnityEngine;
 
 namespace AircraftSimulator {
-    public class Wind1 : Component {
-        private double _currentWind;
+    public class Engine : Component {
+        private double _currentPower;
 
-        public Wind1(double mass, string name, Vector3 relativePosition, double maxPower = 100) {
-            _currentWind = 0;
-            MaxWind = 400;
+        public Engine(double mass, string name, Vector3 relativePosition, double maxPower = 100) {
+            _currentPower = 0;
+            MaxPower = 400;
             Mass = mass;
             Name = name;
             RelativePosition = relativePosition;
         }
 
-        public double CurrentWind {
-            get => _currentWind;
-            set => _currentWind = Math.Max(Math.Min(MaxWind, value), 0);
+        public double CurrentPower {
+            get => _currentPower;
+            set {
+                if (MaxPower < value) { _currentPower = MaxPower; }
+                else if (value < -MaxPower) { _currentPower = MaxPower; }
+                else _currentPower = value;
+            }
         }
 
-        public double MaxWind { get; set; }
+        public double MaxPower { get; set; }
     }
 }
