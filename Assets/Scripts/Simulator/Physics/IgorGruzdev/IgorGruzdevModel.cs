@@ -66,23 +66,18 @@ namespace AircraftSimulator.Physics.IgorGruzdev{
                 }
             }
 
-            CurrentState.U = 0;
-            CurrentState.V = 0; // totalPower / m;
-            CurrentState.W = 0;
-            CurrentState.RollRate = P;
-            CurrentState.PitchRate = Q;
-            CurrentState.YawRate = R;
-
-            var vel = (CurrentState.V - V)/deltaTime;
-            Debug.Log(vel);
-
-            var globalTime = 0; // suddenly, we do not know global time, I need to implement it later...
+            float time = 0; // suddenly, we do not know global time, I need to implement it later...
             // however, your Turbulent Wind Model is also not using global time for now, so let it be zero
             
             var velocityOfWind =
-                _weather.Wind.Value(position, globalTime); // here I use aircraft position to obtain wind velocity
-            
-            Debug.Log(velocityOfWind);
+                _weather.Wind.Value(position, time); // here I use aircraft position to obtain wind velocity
+
+            CurrentState.U = 0; // velocityOfWind.x;
+            CurrentState.V = totalPower / m; // velocityOfWind.y + totalPower / m;
+            CurrentState.W = 0; // velocityOfWind.z;
+            CurrentState.RollRate = P;
+            CurrentState.PitchRate = Q;
+            CurrentState.YawRate = R;
         }
     }
 }

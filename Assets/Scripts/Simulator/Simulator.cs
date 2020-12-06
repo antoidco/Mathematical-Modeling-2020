@@ -10,10 +10,10 @@ namespace AircraftSimulator {
         public const float GravityConstant = -9.81f;
         private readonly Aircraft _aircraft;
         private Weather _weather;
-        private double _globalTime;
+        private float _globalTime;
 
         private PhysicsModel _physicsModel;
-        public double Time { get; private set; }
+        public float Time { get; private set; }
 
         public Simulator(Aircraft aircraft, Weather weather) {
             Time = 0;
@@ -43,10 +43,10 @@ namespace AircraftSimulator {
             _aircraft.Position = new Vector3(0, 0, height);
         }
 
-        public void Update(double timeStep, ControlData controlData) {
+        public void Update(float timeStep, ControlData controlData) {
             Time += timeStep;
-
-            _physicsModel.Update(controlData, (float) timeStep);
+            
+            _physicsModel.Update(controlData, timeStep);
         }
     }
 }

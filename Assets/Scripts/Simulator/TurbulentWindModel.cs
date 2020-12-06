@@ -6,23 +6,27 @@ namespace AircraftSimulator
     { 
         public TurbulentWindModel() : base(ModelType.Wind) { }
 
-        public Vector3 Value(Vector3 position, double time) {
-            var x = position.x;
-            var y = position.y;
-            var z = position.z;
+        public Vector3 Value(Vector3 positionOfAircraft, float time) {
+            float x = positionOfAircraft.x;
+            float y = positionOfAircraft.y;
+            float z = positionOfAircraft.z;
+
             var windValue = Vector3.zero;
+            float x0 = 150*Mathf.Sin(time/10); //position of peak turbulent wind 
+            float y0 = 300*Mathf.Cos(time/10);
+            float z0 = 50;
 
-            var su = 2;
-            var sv = 1;
-            var sw = 3;
+            float su = 1; //constant wind value
+            float sv = 0.5f;
+            float sw = 0.1f;
 
-            var Lu = 8;
+            var Lu = 8; //
             var Lv = 16;
             var Lw = 4;
 
-            windValue.x = su * su * Lu / (Mathf.PI * (1 + Mathf.Pow(Lu * x, 2)));
-            windValue.y = sv * sv * Lv * (1 + 12 * Mathf.Pow(Lv * y, 2)) / Mathf.Pow(Mathf.PI * (1 + 4 * Mathf.Pow(Lv * y, 2)), 2);
-            windValue.z = sw * sw * Lw * (1 + 12 * Mathf.Pow(Lw * z, 2)) / Mathf.Pow(Mathf.PI * (1 + 4 * Mathf.Pow(Lw * z, 2)), 2);
+            windValue.x = su + su * su * Lu / (Mathf.PI * (1 + Mathf.Pow(Lu * (x-x0), 2)));
+            windValue.y = sv + sv * sv * Lv * (1 + 12 * Mathf.Pow(Lv * (y-y0), 2)) / Mathf.Pow(Mathf.PI * (1 + 4 * Mathf.Pow(Lv * (y-y0), 2)), 2);
+            windValue.z = sw + sw * sw * Lw * (1 + 12 * Mathf.Pow(Lw * (z-z0), 2)) / Mathf.Pow(Mathf.PI * (1 + 4 * Mathf.Pow(Lw * (z-z0), 2)), 2);
 
             return windValue;
         }
