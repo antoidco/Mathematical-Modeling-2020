@@ -26,7 +26,7 @@ namespace AircraftSimulator {
                     ElevatorTurnRate = 3f, RudderTurnRate = 100f
                 });
             */
-            _physicsModel = new IgorGruzdevModel(_aircraft, Vector3.zero, _weather,
+            _physicsModel = new IgorGruzdevModel(_aircraft, Vector3.zero, _weather, 0.2f,
                 new IgorGruzdevModelData
                 {
                     ControlRate = 10f,

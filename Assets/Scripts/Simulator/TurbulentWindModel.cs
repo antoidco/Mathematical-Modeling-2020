@@ -12,17 +12,17 @@ namespace AircraftSimulator
             float z = positionOfAircraft.z;
 
             var windValue = Vector3.zero;
-            float x0 = 150*Mathf.Sin(time/10); //position of peak turbulent wind 
-            float y0 = 300*Mathf.Cos(time/10);
+            float x0 = 150*Mathf.Cos(2*time/10); //position of peak turbulent wind 
+            float y0 = 300*Mathf.Sin(4*time/10);
             float z0 = 50;
 
             float su = 1; //constant wind value
             float sv = 0.5f;
             float sw = 0.1f;
 
-            var Lu = 8; //
-            var Lv = 16;
-            var Lw = 4;
+            var Lu = 30; //influence of turbulent wind
+            var Lv = 50;
+            var Lw = 20;
 
             windValue.x = su + su * su * Lu / (Mathf.PI * (1 + Mathf.Pow(Lu * (x-x0), 2)));
             windValue.y = sv + sv * sv * Lv * (1 + 12 * Mathf.Pow(Lv * (y-y0), 2)) / Mathf.Pow(Mathf.PI * (1 + 4 * Mathf.Pow(Lv * (y-y0), 2)), 2);

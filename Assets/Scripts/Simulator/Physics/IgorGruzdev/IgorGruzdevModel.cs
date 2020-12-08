@@ -3,13 +3,13 @@
 namespace AircraftSimulator.Physics.IgorGruzdev{
     public class IgorGruzdevModel : PhysicsModel{
         private IgorGruzdevModelData _data;
-        private Weather _weather; // lets cache weather to use it later !
-        public IgorGruzdevModel(Aircraft aircraft, Vector3 initialVelocity, Weather weather, IgorGruzdevModelData data) : base(aircraft, initialVelocity) {
+        private Weather _weather;
+        private float _resistanceCoefficient;
+        public IgorGruzdevModel(Aircraft aircraft, Vector3 initialVelocity, Weather weather, float resistance, IgorGruzdevModelData data) : base(aircraft, initialVelocity) {
             _data = data;
             _weather = weather;
+            _resistanceCoefficient = resistance;
         }
-
-        //public Vector3 Position { get; private set; } // bad! 
 
         protected override void PerformStep(ControlData control, float deltaTime)
         {
@@ -44,40 +44,46 @@ namespace AircraftSimulator.Physics.IgorGruzdev{
                 {
                     if (engine.CurrentPower < engine.MaxPower * control.Power && control.Power > 0)
                     {
-                        engine.CurrentPower += engine.MaxPower * control.Power / 100;
+                        engine.CurrentPower += engine.MaxPower * control.Power / 200;
                     }
-
+                    
                     if (engine.CurrentPower > engine.MaxPower * control.Power && control.Power > 0)
                     {
-                        engine.CurrentPower -= engine.MaxPower * control.Power / 100;
+                        engine.CurrentPower -= engine.MaxPower * control.Power / 200;
                     }
 
                     if (engine.CurrentPower < engine.MaxPower * control.Power && control.Power < 0)
                     {
-                        engine.CurrentPower -= engine.MaxPower * control.Power / 100;
+                        engine.CurrentPower -= engine.MaxPower * control.Power / 200;
                     }
-
+                    
                     if (engine.CurrentPower > engine.MaxPower * control.Power && control.Power < 0)
                     {
-                        engine.CurrentPower += engine.MaxPower * control.Power / 100;
+                        engine.CurrentPower += engine.MaxPower * control.Power / 200;
                     }
 
                     totalPower += (float)engine.CurrentPower;
                 }
             }
 
-            float time = 0; // suddenly, we do not know global time, I need to implement it later...
-            // however, your Turbulent Wind Model is also not using global time for now, so let it be zero
-            
-            var velocityOfWind =
-                _weather.Wind.Value(position, time); // here I use aircraft position to obtain wind velocity
+            float time = Time.time;
 
-            CurrentState.U = 0; // velocityOfWind.x;
-            CurrentState.V = totalPower / m; // velocityOfWind.y + totalPower / m;
-            CurrentState.W = 0; // velocityOfWind.z;
+            float square = 1; //later need to get it from unity 
+
+            float resistanceVelocity = _resistanceCoefficient * Mathf.Pow(CurrentState.V, 2) * 1.3f * square / 2f * deltaTime;
+
+
+            var velocityOfWind = Vector3.zero;
+                //_weather.Wind.Value(position, time); // here I use aircraft position to obtain wind velocity
+
+            CurrentState.U = velocityOfWind.x;
+            CurrentState.V = velocityOfWind.y + totalPower / m - resistanceVelocity;
+            CurrentState.W = velocityOfWind.z;
             CurrentState.RollRate = P;
             CurrentState.PitchRate = Q;
             CurrentState.YawRate = R;
+
+            Debug.Log(CurrentState.V - resistanceVelocity);
         }
     }
 }
