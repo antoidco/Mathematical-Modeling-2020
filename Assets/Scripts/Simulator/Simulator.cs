@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using AircraftSimulator.Physics;
 using AircraftSimulator.Physics.Basic;
+using AircraftSimulator.Physics.DariaKlochko;
 
 namespace AircraftSimulator {
     // todo: refactor this
@@ -18,16 +19,20 @@ namespace AircraftSimulator {
             Time = 0;
             _aircraft = aircraft;
             _weather = weather;
-            _physicsModel = new BasicPhysicsModel(_aircraft, Vector3.zero,
-                new BasicPhysicsModelData {
+            
+            _physicsModel = new DariaKlochkoModel(_aircraft, Vector3.zero,
+                new DariaKlochkoModelData {
                     ControlRate = 10f, DeadZone = 0.2f, Lerp = 0.03f, MaxTurn = 15.0f, AileronTurnRate = 300f,
                     ElevatorTurnRate = 3f, RudderTurnRate = 100f
                 });
+            
+            /*_physicsModel = new DariaKlochkoModel(_aircraft, Vector3.zero);*/
         }
 
         public void Restart(float height) {
             _aircraft.Position = new Vector3(0, 0, height);
         }
+
 
         public void Update(double timeStep, ControlData controlData) {
             Time += timeStep;
