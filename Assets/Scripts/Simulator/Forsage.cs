@@ -3,10 +3,10 @@ using UnityEngine;
 
 namespace AircraftSimulator {
     public class Forsage : MonoBehaviour {
-        public bool forsage;    
+        public bool IsActive = false;    
         public void ButtonForsage() {
-            forsage = true;
-            Debug.Log("1");
+            IsActive = true;
+            Debug.Log("Forsage!");
         }
     }
 }

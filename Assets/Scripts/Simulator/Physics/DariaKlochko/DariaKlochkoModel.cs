@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace AircraftSimulator.Physics.DariaKlochko{
+namespace AircraftSimulator.Physics.DariaKlochko {
     public class DariaKlochkoModel : PhysicsModel {
         private DariaKlochkoModelData _data;
         public DariaKlochkoModel(Aircraft aircraft, Vector3 initialVelocity, DariaKlochkoModelData data) : base(
