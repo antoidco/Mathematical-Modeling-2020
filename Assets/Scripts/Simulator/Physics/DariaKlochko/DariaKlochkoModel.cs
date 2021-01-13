@@ -42,6 +42,24 @@ namespace AircraftSimulator.Physics.DariaKlochko {
                     totalPower += (float)engine.CurrentPower;
                 }
             }
+            // okay, here we need to past specific code for our model (to apply forsage)
+            /*
+             * something like
+             * 
+             *     if (isForsage) totalPower *= 5;
+             * 
+             * but we dont know the value of 'isForsage'
+             * it would be correct to find this value in 'control' variable
+             * however we can't find it there because ControlData is NOT common for all the models
+             * and Forsage is only appearing in YOUR specific model
+             * in short, we added reference to Forsage MonoBehaviour in DariaKlochkoModelData
+             * so, 'is_forsage' can be evaluated using '_data'
+             *
+             * try to do this below :)
+             */
+            var isForsage = _data./*past your code here*/;
+            if (isForsage) totalPower *= 5;
+            
             // evaluate current state
             // this is not physics!!!
             CurrentState.U = 0;
