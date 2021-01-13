@@ -18,7 +18,7 @@ public class AircraftControllerComponent : MonoBehaviour {
         _elevatorControl = elevatorSlider.value;
         _rudderControl = rudderSlider.value;
         _engineControl = engineSlider.value; // todo: get these values from sliders!!!
-     
+
         aileronSlider.onValueChanged.AddListener(OnAileronChange);
         elevatorSlider.onValueChanged.AddListener(OnElevatorChange);
         rudderSlider.onValueChanged.AddListener(OnRudderChange);
