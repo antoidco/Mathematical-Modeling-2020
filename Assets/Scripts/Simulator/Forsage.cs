@@ -13,7 +13,7 @@ namespace AircraftSimulator {
         public void ButtonForsage() {
             IsActive = true;
             Debug.Log("Forsage!");
-
+            
             StartCoroutine("DisableAfterOneSecond");
         }
     }
