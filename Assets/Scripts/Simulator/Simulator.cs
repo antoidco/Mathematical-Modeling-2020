@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
 using AircraftSimulator.Physics;
-using AircraftSimulator.Physics.Basic;
 using AircraftSimulator.Physics.DariaKlochko;
 
 namespace AircraftSimulator {
@@ -19,13 +18,20 @@ namespace AircraftSimulator {
             Time = 0;
             _aircraft = aircraft;
             _weather = weather;
-            
+
+            var forsage = GameObject.FindObjectOfType<Forsage>(); 
             _physicsModel = new DariaKlochkoModel(_aircraft, Vector3.zero,
                 new DariaKlochkoModelData {
-                    ControlRate = 10f, DeadZone = 0.2f, Lerp = 0.03f, MaxTurn = 15.0f, AileronTurnRate = 300f,
-                    ElevatorTurnRate = 3f, RudderTurnRate = 100f
+                    ControlRate = 10f,
+                    DeadZone = 0.2f,
+                    Lerp = 0.03f,
+                    MaxTurn = 15.0f,
+                    AileronTurnRate = 300f,
+                    ElevatorTurnRate = 3f,
+                    RudderTurnRate = 100f,
+                    Forsage = forsage
                 });
-            
+
             /*_physicsModel = new DariaKlochkoModel(_aircraft, Vector3.zero);*/
         }
 

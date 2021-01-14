@@ -9,5 +9,7 @@
         public float AileronTurnRate;
         public float ElevatorTurnRate;
         public float RudderTurnRate;
+
+        public Forsage Forsage;
     }
 }

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace AircraftSimulator.Physics.DariaKlochko{
+namespace AircraftSimulator.Physics.DariaKlochko {
     public class DariaKlochkoModel : PhysicsModel {
         private DariaKlochkoModelData _data;
         public DariaKlochkoModel(Aircraft aircraft, Vector3 initialVelocity, DariaKlochkoModelData data) : base(
@@ -8,8 +8,7 @@ namespace AircraftSimulator.Physics.DariaKlochko{
             _data = data;
         }
 
-         protected override void PerformStep(ControlData control, float deltaTime)
-        {
+         protected override void PerformStep(ControlData control, float deltaTime) {
             var rRate = control.AileronAngle - _data.DeadZone;
             var controlR = Mathf.Abs(control.AileronAngle) > _data.DeadZone
                 ? Mathf.Abs(rRate) * Mathf.Sign(rRate) * _data.ControlRate
@@ -42,6 +41,9 @@ namespace AircraftSimulator.Physics.DariaKlochko{
                     totalPower += (float)engine.CurrentPower;
                 }
             }
+
+            var isForsage = _data.Forsage.IsActive;
+            if (isForsage) totalPower *= 5;
             // evaluate current state
             // this is not physics!!!
             CurrentState.U = 0;
