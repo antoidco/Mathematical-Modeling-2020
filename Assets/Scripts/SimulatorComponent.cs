@@ -2,13 +2,20 @@ using AircraftSimulator;
 using UnityEngine;
 using UnityEngine.UI;
 
+public enum ModelEnum
+{
+    Basic,
+    IgorGruzdev,
+    IlyaAntonov
+}
+
 public class SimulatorComponent : MonoBehaviour {
     public GameObject AircraftInstance;
     private Aircraft _aircraft;
     private Simulator _simulator;
     public AircraftControllerComponent controller;
-
     public Text info;
+    public ModelEnum modelEnum;
 
     private void Awake() {
         _aircraft = new Aircraft(AircraftInstance.transform.position, AircraftInstance.transform.rotation);
@@ -16,9 +23,9 @@ public class SimulatorComponent : MonoBehaviour {
         _aircraft.Components.Add(engine1);
         engine1.CurrentPower = 20;
 
-        //_simulator = new Simulator(_aircraft, new Weather(new Wind(new ConstantWindModel(new Vector3(0, 0, 0)))));
-        // instead of ConstantWindModel we now use TurbulentWindModel
-        _simulator = new Simulator(_aircraft, new Weather(new Wind(new TurbulentWindModel())));
+        var weather = new Weather(new Wind(new ConstantWindModel(new Vector3(1, 0, 0))));
+        if (modelEnum == ModelEnum.IgorGruzdev) weather = new Weather(new Wind(new TurbulentWindModel()));
+        _simulator = new Simulator(_aircraft, weather, modelEnum);
     }
 
     private void Update() {
