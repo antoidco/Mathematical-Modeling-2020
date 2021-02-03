@@ -30,6 +30,7 @@ public class SimulatorComponent : MonoBehaviour
         _aircraft.Components.Add(engine3);
         _aircraft.Components.Add(engine4);
         engine1.CurrentPower = 20;
+
         foreach (var component in _aircraft.Components)
             if (component is CopterEngine engine)
                 engine.CurrentPower = 20;
