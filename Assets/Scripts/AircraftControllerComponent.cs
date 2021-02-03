@@ -12,6 +12,7 @@ public class AircraftControllerComponent : MonoBehaviour {
     public Slider elevatorSlider;
     public Slider rudderSlider;
     public Slider engineSlider;
+    
 
     private void Start() {
         _aileronControl = aileronSlider.value;

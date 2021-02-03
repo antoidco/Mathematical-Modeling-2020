@@ -16,7 +16,9 @@ public class SimulatorComponent : MonoBehaviour {
         _aircraft.Components.Add(engine1);
         engine1.CurrentPower = 20;
 
-        _simulator = new Simulator(_aircraft, new Weather(new Wind(new ConstantWindModel(new Vector3(0, 0, 0)))));
+        //_simulator = new Simulator(_aircraft, new Weather(new Wind(new ConstantWindModel(new Vector3(0, 0, 0)))));
+        // instead of ConstantWindModel we now use TurbulentWindModel
+        _simulator = new Simulator(_aircraft, new Weather(new Wind(new TurbulentWindModel())));
     }
 
     private void Update() {
