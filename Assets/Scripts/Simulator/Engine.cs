@@ -15,7 +15,11 @@ namespace AircraftSimulator {
 
         public double CurrentPower {
             get => _currentPower;
-            set => _currentPower = Math.Max(Math.Min(MaxPower, value), 0);
+            set {
+                if (MaxPower < value) { _currentPower = MaxPower; }
+                else if (value < -MaxPower) { _currentPower = MaxPower; }
+                else _currentPower = value;
+            }
         }
 
         public double MaxPower { get; set; }
