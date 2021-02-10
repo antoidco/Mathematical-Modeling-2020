@@ -1,4 +1,5 @@
 using AircraftSimulator.Physics;
+using AircraftSimulator.Physics.DariaKlochko;
 using AircraftSimulator.Physics.Basic;
 using UnityEngine;
 using AircraftSimulator.Physics.IlyaAntonov;
@@ -33,7 +34,7 @@ namespace AircraftSimulator
                     MaxTurn = 15.0f,
                     AileronTurnRate = 300f,
                     ElevatorTurnRate = 3f,
-                    RudderTurnRate = 100f
+                    RudderTurnRate = 100f,
                 });
                     break;
                 case ModelEnum.Basic:
@@ -55,6 +56,21 @@ namespace AircraftSimulator
                             RudderTurnRate = 100f
                         });
                     break;
+                case ModelEnum.DariaKlochko:
+                    var forsage = GameObject.FindObjectOfType<Forsage>();
+                    _physicsModel = new DariaKlochkoModel(_aircraft, Vector3.zero,
+                        new DariaKlochkoModelData
+                        {
+                            ControlRate = 10f,
+                            DeadZone = 0.2f,
+                            Lerp = 0.03f,
+                            MaxTurn = 15.0f,
+                            AileronTurnRate = 300f,
+                            ElevatorTurnRate = 3f,
+                            Forsage = forsage,
+                            RudderTurnRate = 100f,
+                        });
+                    break;
                 default:
                     throw new System.NotImplementedException();
             }
@@ -66,8 +82,7 @@ namespace AircraftSimulator
             _physicsModel.Restart(Vector3.zero);
         }
 
-        public void Update(float timeStep, ControlData controlData)
-        {
+        public void Update(float timeStep, ControlData controlData) {
             Time += timeStep;
             
             _physicsModel.Update(controlData, timeStep);

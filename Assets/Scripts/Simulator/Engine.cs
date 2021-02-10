@@ -6,9 +6,7 @@ namespace AircraftSimulator
     public class Engine : Component
     {
         private double _currentPower;
-
-        public Engine(double mass, string name, Vector3 relativePosition, double maxPower = 100)
-        {
+        public Engine(double mass, string name, Vector3 relativePosition, double maxPower = 100) {
             _currentPower = 0;
             MaxPower = maxPower;
             Mass = mass;

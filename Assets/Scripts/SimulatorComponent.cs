@@ -8,7 +8,8 @@ public enum ModelEnum
     Basic,
     IgorGruzdev,
     IlyaAntonov,
-    FedorKondratenko
+    FedorKondratenko,
+    DariaKlochko
 }
 
 public class SimulatorComponent : MonoBehaviour {
