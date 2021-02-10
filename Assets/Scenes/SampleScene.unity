@@ -900,6 +900,7 @@ MonoBehaviour:
   AircraftInstance: {fileID: 87524212}
   controller: {fileID: 1628919176}
   info: {fileID: 1362407348}
+  modelEnum: 0
 --- !u!1 &523761216
 GameObject:
   m_ObjectHideFlags: 0

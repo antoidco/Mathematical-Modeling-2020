@@ -1,6 +1,7 @@
 using AircraftSimulator.Physics;
 using AircraftSimulator.Physics.Basic;
 using UnityEngine;
+using AircraftSimulator.Physics.IlyaAntonov;
 using AircraftSimulator.Physics.IgorGruzdev;
 
 namespace AircraftSimulator
@@ -15,22 +16,15 @@ namespace AircraftSimulator
         private double _globalTime;
         private Weather _weather;
         public float Time { get; private set; }
-
-        public Simulator(Aircraft aircraft, Weather weather)
-        {
+        public Simulator(Aircraft aircraft, Weather weather, ModelEnum modelEnum) {
             Time = 0;
             _aircraft = aircraft;
             _weather = weather;
 
-            _physicsModel = new CopterPhysicsModel(_aircraft, Vector3.zero,
-                new CopterPhysicsModelData
-                {
-                    ControlRate = 10f, DeadZone = 0.2f, Lerp = 0.03f, MaxTurn = 15.0f, AileronTurnRate = 300f,
-                    ElevatorTurnRate = 3f, RudderTurnRate = 100f
-                });
-            
-            /*
-            _physicsModel = new IgorGruzdevModel(_aircraft, Vector3.zero, _weather, 0.2f,
+            switch (modelEnum)
+            {
+                case ModelEnum.IgorGruzdev:
+                    _physicsModel = new IgorGruzdevModel(_aircraft, Vector3.zero, _weather, 0.2f,
                 new IgorGruzdevModelData
                 {
                     ControlRate = 10f,
@@ -40,8 +34,30 @@ namespace AircraftSimulator
                     AileronTurnRate = 300f,
                     ElevatorTurnRate = 3f,
                     RudderTurnRate = 100f
-                }) ;
-            */
+                });
+                    break;
+                case ModelEnum.Basic:
+                    _physicsModel = new BasicPhysicsModel(_aircraft, Vector3.zero, new BasicPhysicsModelData());
+                    break;
+                case ModelEnum.IlyaAntonov:
+                    _physicsModel = new IlyaAntonovModel(_aircraft, Vector3.zero);
+                    break;
+                case ModelEnum.FedorKondratenko:
+                    _physicsModel = new CopterPhysicsModel(_aircraft, Vector3.zero,
+                        new CopterPhysicsModelData
+                        {
+                            ControlRate = 10f,
+                            DeadZone = 0.2f,
+                            Lerp = 0.03f,
+                            MaxTurn = 15.0f,
+                            AileronTurnRate = 300f,
+                            ElevatorTurnRate = 3f,
+                            RudderTurnRate = 100f
+                        });
+                    break;
+                default:
+                    throw new System.NotImplementedException();
+            }
         }
 
         public void Restart(float height)

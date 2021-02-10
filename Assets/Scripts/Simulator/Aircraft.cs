@@ -9,6 +9,13 @@ namespace AircraftSimulator
         public double DragConstant;
         public Vector3 Inertia;
 
+        public Aircraft(Vector3 initialPosition, Quaternion quaternion)
+        {
+            Rotation = new Rotation(quaternion);
+            Components = new List<Component>();
+            Position = initialPosition;
+        }
+
         public Aircraft(Vector3 initialPosition, Quaternion quaternion, double dragConstant,
             Vector3 inertia)
         {
