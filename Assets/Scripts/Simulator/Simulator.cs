@@ -1,21 +1,21 @@
-using System;
-using UnityEngine;
 using AircraftSimulator.Physics;
 using AircraftSimulator.Physics.Basic;
+using UnityEngine;
 using AircraftSimulator.Physics.IlyaAntonov;
 using AircraftSimulator.Physics.IgorGruzdev;
 
-namespace AircraftSimulator {
+namespace AircraftSimulator
+{
     // todo: refactor this
-    public class Simulator {
+    public class Simulator
+    {
         public const float GravityConstant = -9.81f;
         private readonly Aircraft _aircraft;
-        private Weather _weather;
-        private float _globalTime;
 
         private PhysicsModel _physicsModel;
+        private double _globalTime;
+        private Weather _weather;
         public float Time { get; private set; }
-
         public Simulator(Aircraft aircraft, Weather weather, ModelEnum modelEnum) {
             Time = 0;
             _aircraft = aircraft;
@@ -42,14 +42,32 @@ namespace AircraftSimulator {
                 case ModelEnum.IlyaAntonov:
                     _physicsModel = new IlyaAntonovModel(_aircraft, Vector3.zero);
                     break;
+                case ModelEnum.FedorKondratenko:
+                    _physicsModel = new CopterPhysicsModel(_aircraft, Vector3.zero,
+                        new CopterPhysicsModelData
+                        {
+                            ControlRate = 10f,
+                            DeadZone = 0.2f,
+                            Lerp = 0.03f,
+                            MaxTurn = 15.0f,
+                            AileronTurnRate = 300f,
+                            ElevatorTurnRate = 3f,
+                            RudderTurnRate = 100f
+                        });
+                    break;
+                default:
+                    throw new System.NotImplementedException();
             }
         }
 
-        public void Restart(float height) {
+        public void Restart(float height)
+        {
             _aircraft.Position = new Vector3(0, 0, height);
+            _physicsModel.Restart(Vector3.zero);
         }
 
-        public void Update(float timeStep, ControlData controlData) {
+        public void Update(float timeStep, ControlData controlData)
+        {
             Time += timeStep;
             
             _physicsModel.Update(controlData, timeStep);
