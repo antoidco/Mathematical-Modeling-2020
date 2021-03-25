@@ -71,6 +71,23 @@ namespace AircraftSimulator
                             RudderTurnRate = 100f,
                         });
                     break;
+				case ModelEnum.MaksimVolgin:
+                    _physicsModel = new MaksimVolginModel(_aircraft, Vector3.zero,
+                    new MaksimVolginModelData
+                    {
+                        ControlRate = 10f,
+                        DeadZone = 0.2f,
+                        Lerp = 0.03f,
+                        MaxTurn = 15.0f,
+                        AileronTurnRate = 300f,
+                        ElevatorTurnRate = 3f,
+                        RudderTurnRate = 100f,
+
+                        aerodynamicDrag = 0.001f,
+                        frontalResistanceArea = 1f,
+                        airDensity = 1.2754f,
+                    }) ;
+                    break;
                 default:
                     throw new System.NotImplementedException();
             }
