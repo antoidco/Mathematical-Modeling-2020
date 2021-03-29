@@ -1,4 +1,4 @@
-﻿namespace AircraftSimulator.Physics.DariaKlochko{
+﻿namespace AircraftSimulator.Physics.OlenchukPavel{
     public struct OlenchukPavelModelData
     {
         public float DeadZone;
