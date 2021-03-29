@@ -43,16 +43,7 @@ namespace AircraftSimulator.Physics.OlenchukPavel {
                 }
             }
 
-            var isForsage = _data.Forsage.IsActive;
-            if (isForsage)
-            {   
-                var tpk=totalPower;
-                for (int i=1, i<3000, i++)
-                {
-                    totalPower += tpk*0.001;
-                    TT.Timer(1);
-                }  
-            }
+            
             // evaluate current state
             // this is not physics!!!
             CurrentState.U = 0;
