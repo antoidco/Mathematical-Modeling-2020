@@ -48,7 +48,7 @@ namespace AircraftSimulator.Physics.OlenchukPavel {
                 for (int i=1, i<3000,i++)
                 {
                 totalPower += tpk*0.001;
-                System.Threading.Thread.Sleep(1);
+                yield return new WaitForSeconds(0.001f);
                 }
             
             // evaluate current state
