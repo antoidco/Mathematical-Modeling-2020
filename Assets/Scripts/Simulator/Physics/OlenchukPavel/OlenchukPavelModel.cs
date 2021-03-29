@@ -44,13 +44,13 @@ namespace AircraftSimulator.Physics.OlenchukPavel {
 
             var isForsage = _data.Forsage.IsActive;
             if (isForsage) 
-            {
-                totalPower *= 3;
-                System.Threading.Thread.Sleep(3000);
-                totalPower *= 0.2;
-                System.Threading.Thread.Sleep(3000);
-                totalPower *= 5/3;
-            }
+                var tpk = totalPower;
+                for (int i=1, i<3000,i++)
+                {
+                totalPower += tpk*0.001;
+                System.Threading.Thread.Sleep(1);
+                }
+            
             // evaluate current state
             // this is not physics!!!
             CurrentState.U = 0;
