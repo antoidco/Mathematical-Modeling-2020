@@ -6,7 +6,7 @@ namespace AircraftSimulator {
     public class Forsage : MonoBehaviour {
         public bool IsActive = false;
         IEnumerator DisableAfterOneSecond(){
-            yield return new WaitForSeconds(1f); // here we wait for 1 second
+            yield return new WaitForSeconds(3f); // here we wait for 1 second
             IsActive = false; // here we disable forsage
             Debug.Log("Forsage disabled");
         }
