@@ -43,7 +43,11 @@ namespace AircraftSimulator.Physics.OlenchukPavel {
                 }
             }
 
-            
+            var isForsage = _data.Forsage.IsActive;
+            if (isForsage)
+            {   
+                 
+            }
             // evaluate current state
             // this is not physics!!!
             CurrentState.U = 0;
