@@ -1,9 +1,10 @@
-﻿using UnityEngine;
 using TT = System.Threading;
-namespace AircraftSimulator.Physics.OlenchukPavel {
-    public class OlenchukPavelModel : PhysicsModel {
-        private OlenchukPavelModelData _data;
-        public OlenchukPavelModel(Aircraft aircraft, Vector3 initialVelocity, OlenchukPavelModelData data) : base(
+using UnityEngine;
+
+namespace AircraftSimulator.Physics.DariaKlochko {
+    public class DariaKlochkoModel : PhysicsModel {
+        private DariaKlochkoModelData _data;
+        public DariaKlochkoModel(Aircraft aircraft, Vector3 initialVelocity, DariaKlochkoModelData data) : base(
             aircraft, initialVelocity) {
             _data = data;
         }
@@ -43,14 +44,15 @@ namespace AircraftSimulator.Physics.OlenchukPavel {
             }
 
             var isForsage = _data.Forsage.IsActive;
-            if (isForsage) 
-                var tpk = totalPower;
-                for (int i=1, i<3000,i++)
+            if (isForsage)
+            {   
+                var tpk=totalPower;
+                for (int i=1, i<3000, i++)
                 {
-                totalPower += tpk*0.001;
-                TT.Timer(1);
-                }
-            
+                    totalPower += tpk*0.001;
+                    TT.Timer(1);
+                }  
+            }
             // evaluate current state
             // this is not physics!!!
             CurrentState.U = 0;
