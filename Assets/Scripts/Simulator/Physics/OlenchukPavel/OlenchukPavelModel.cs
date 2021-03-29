@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-
+using TT = System.Threading;
 namespace AircraftSimulator.Physics.OlenchukPavel {
     public class OlenchukPavelModel : PhysicsModel {
         private OlenchukPavelModelData _data;
@@ -48,7 +48,7 @@ namespace AircraftSimulator.Physics.OlenchukPavel {
                 for (int i=1, i<3000,i++)
                 {
                 totalPower += tpk*0.001;
-                yield return new WaitForSeconds(0.001f);
+                TT.Timer(1);
                 }
             
             // evaluate current state
