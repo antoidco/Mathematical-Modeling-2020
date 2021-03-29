@@ -46,7 +46,8 @@ namespace AircraftSimulator.Physics.OlenchukPavel {
             var isForsage = _data.Forsage.IsActive;
             if (isForsage)
             {   
-                 
+                var tpk = totalPower;
+                
             }
             // evaluate current state
             // this is not physics!!!
