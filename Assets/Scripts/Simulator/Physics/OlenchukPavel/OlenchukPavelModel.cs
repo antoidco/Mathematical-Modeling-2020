@@ -1,10 +1,10 @@
 using TT = System.Threading;
 using UnityEngine;
 
-namespace AircraftSimulator.Physics.DariaKlochko {
-    public class DariaKlochkoModel : PhysicsModel {
-        private DariaKlochkoModelData _data;
-        public DariaKlochkoModel(Aircraft aircraft, Vector3 initialVelocity, DariaKlochkoModelData data) : base(
+namespace AircraftSimulator.Physics.OlenchukPavel {
+    public class OlenchukPavelModel : PhysicsModel {
+        private OlenchukPavelModelData _data;
+        public OlenchukPavelModel(Aircraft aircraft, Vector3 initialVelocity, OlenchukPavelModelData data) : base(
             aircraft, initialVelocity) {
             _data = data;
         }
