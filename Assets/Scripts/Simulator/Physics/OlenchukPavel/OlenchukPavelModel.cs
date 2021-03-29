@@ -47,7 +47,11 @@ namespace AircraftSimulator.Physics.OlenchukPavel {
             if (isForsage)
             {   
                 var tpk = totalPower;
-                
+                for (var i=1, i<3000, i++)
+                {
+                    //totalPower += tpk*0.001;
+                    
+                }   
             }
             // evaluate current state
             // this is not physics!!!
