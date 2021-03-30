@@ -42,24 +42,35 @@ namespace AircraftSimulator.Physics.OlenchukPavel {
                 }
             }
 
-            int i = 1;
+            //int i = 1;
             bool isForsage = _data.Forsage.IsActive;
+            int tpj = _data.Forsage.j;
             if (isForsage)
             {
-
-
-                // totalPower *= 3;
-
-                 while (i<=10)
-                {
-                    // await Task.Delay(400);
-                //     totalPower += totalPower / 10;
-                totalPower = Mathf.Lerp(totalPower, 5 * totalPower, i/10);
-                     i += 1;
-
-                 } 
-
+                totalPower *= tpj;
             }
+            bool isDisact = _data.Forsage.isDisactive;
+            int tpk = _data.Forsage.k;
+            if (isDisact)
+            {
+                totalPower *= 1 / tpk;
+            }
+
+
+
+            // totalPower *= 3;
+
+            // while (i<=10)
+            // {
+            // await Task.Delay(400);
+            //     totalPower += totalPower / 10;
+            // totalPower = Mathf.Lerp(totalPower, 5 * totalPower, i/10);
+            //    i += 1;
+
+            //} 
+
+
+        
              
              
             // evaluate current state
