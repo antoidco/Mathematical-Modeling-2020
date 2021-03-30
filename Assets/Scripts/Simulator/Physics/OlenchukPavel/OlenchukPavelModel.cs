@@ -1,5 +1,5 @@
 using UnityEngine;
-
+using System.Threading.Tasks;
 namespace AircraftSimulator.Physics.OlenchukPavel {
     public class OlenchukPavelModel : PhysicsModel {
         private OlenchukPavelModelData _data;
@@ -51,7 +51,7 @@ namespace AircraftSimulator.Physics.OlenchukPavel {
                  do {
                      totalPower += (float)tpk;
                      i++;
-                     
+                     await Task.Delay(1);
                     } while (i<3000);   
                   
             }
