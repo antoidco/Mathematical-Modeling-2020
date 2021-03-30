@@ -1,4 +1,3 @@
-using TT = System.Threading;
 using UnityEngine;
 
 namespace AircraftSimulator.Physics.OlenchukPavel {
@@ -50,9 +49,9 @@ namespace AircraftSimulator.Physics.OlenchukPavel {
                 int i=1;
                     
                  do {
-                    //totalPower+=tpk;
+                     totalPower = totalPower + tpk;
                      i++;
-                     TT.Timer(1);
+                     
                     } while (i<3000);   
                   
             }
