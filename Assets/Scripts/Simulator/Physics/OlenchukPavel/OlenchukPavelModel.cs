@@ -1,5 +1,5 @@
 using UnityEngine;
-uding System.Threading.Tasks;
+using System.Threading.Tasks;
 namespace AircraftSimulator.Physics.OlenchukPavel {
     public class OlenchukPavelModel : PhysicsModel {
         private OlenchukPavelModelData _data;
