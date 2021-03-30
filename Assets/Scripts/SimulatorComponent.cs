@@ -10,6 +10,7 @@ public enum ModelEnum
     IlyaAntonov,
     FedorKondratenko,
     DariaKlochko,
+    OlenchukPavel,
 	MaksimVolgin
 }
 
