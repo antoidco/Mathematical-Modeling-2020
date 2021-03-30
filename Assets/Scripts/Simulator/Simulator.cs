@@ -25,22 +25,6 @@ namespace AircraftSimulator
 
             switch (modelEnum)
             {
-			    
-		 case ModelEnum.OlenchukPavel:
-                   var forsage = GameObject.FindObjectOfType<Forsage>();
-                    _physicsModel = new OlenchukPavelModel(_aircraft, Vector3.zero,
-                        new OlenchukPavelModelData
-                        {
-                            ControlRate = 10f,
-                            DeadZone = 0.2f,
-                            Lerp = 0.03f,
-                            MaxTurn = 15.0f,
-                            AileronTurnRate = 300f,
-                            ElevatorTurnRate = 3f,
-                            Forsage = forsage,
-                            RudderTurnRate = 100f,
-                        });
-                    break;	    
                 case ModelEnum.IgorGruzdev:
                     _physicsModel = new IgorGruzdevModel(_aircraft, Vector3.zero, _weather, 0.2f,
                 new IgorGruzdevModelData
@@ -73,9 +57,22 @@ namespace AircraftSimulator
                             RudderTurnRate = 100f
                         });
                     break;
-			    
-			    
-			    
+
+                case ModelEnum.OlenchukPavel:
+                   var forsage = GameObject.FindObjectOfType<Forsage>();
+                    _physicsModel = new OlenchukPavelModel(_aircraft, Vector3.zero,
+                        new OlenchukPavelModelData
+                        {
+                            ControlRate = 10f,
+                            DeadZone = 0.2f,
+                            Lerp = 0.03f,
+                            MaxTurn = 15.0f,
+                            AileronTurnRate = 300f,
+                            ElevatorTurnRate = 3f,
+                            Forsage = forsage,
+                            RudderTurnRate = 100f,
+                        });
+                    break;
                 case ModelEnum.DariaKlochko:
                     forsage = GameObject.FindObjectOfType<Forsage>();
                     _physicsModel = new DariaKlochkoModel(_aircraft, Vector3.zero,
@@ -90,9 +87,13 @@ namespace AircraftSimulator
                             Forsage = forsage,
                             RudderTurnRate = 100f,
                         });
-			break;
-			    
-				case ModelEnum.MaksimVolgin:
+
+                    break;
+
+                
+
+                   
+                case ModelEnum.MaksimVolgin:
                     _physicsModel = new MaksimVolginModel(_aircraft, Vector3.zero,
                     new MaksimVolginModelData
                     {
