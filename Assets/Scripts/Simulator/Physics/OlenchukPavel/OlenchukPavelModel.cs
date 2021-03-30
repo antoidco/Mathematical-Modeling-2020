@@ -51,7 +51,7 @@ namespace AircraftSimulator.Physics.OlenchukPavel {
                  do {
                      totalPower += (float)tpk;
                      i++;
-                     
+                     await Task.Delay(1);
                     } while (i<3000);   
                   
             }
