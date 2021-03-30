@@ -26,7 +26,7 @@ namespace AircraftSimulator
             switch (modelEnum)
             {
 			    
-		case ModelEnum.OlenchukPavel:
+		 case ModelEnum.OlenchukPavel:
                    var forsage = GameObject.FindObjectOfType<Forsage>();
                     _physicsModel = new OlenchukPavelModel(_aircraft, Vector3.zero,
                         new OlenchukPavelModelData
@@ -90,7 +90,8 @@ namespace AircraftSimulator
                             Forsage = forsage,
                             RudderTurnRate = 100f,
                         });
-                    break;
+			break;
+			    
 				case ModelEnum.MaksimVolgin:
                     _physicsModel = new MaksimVolginModel(_aircraft, Vector3.zero,
                     new MaksimVolginModelData
