@@ -1,5 +1,6 @@
 using AircraftSimulator.Physics;
 using AircraftSimulator.Physics.DariaKlochko;
+using AircraftSimulator.Physics.OlenchukPavel;
 using AircraftSimulator.Physics.Basic;
 using UnityEngine;
 using AircraftSimulator.Physics.IlyaAntonov;
@@ -56,8 +57,25 @@ namespace AircraftSimulator
                             RudderTurnRate = 100f
                         });
                     break;
+			    
+			    case ModelEnum.OlenchukPavel:
+                   var forsage = GameObject.FindObjectOfType<Forsage>();
+                    _physicsModel = new OlenchukPavelModel(_aircraft, Vector3.zero,
+                        new OlenchukPavelModelData
+                        {
+                            ControlRate = 10f,
+                            DeadZone = 0.2f,
+                            Lerp = 0.03f,
+                            MaxTurn = 15.0f,
+                            AileronTurnRate = 300f,
+                            ElevatorTurnRate = 3f,
+                            Forsage = forsage,
+                            RudderTurnRate = 100f,
+                        });
+                    break;
+			    
                 case ModelEnum.DariaKlochko:
-                    var forsage = GameObject.FindObjectOfType<Forsage>();
+                    forsage = GameObject.FindObjectOfType<Forsage>();
                     _physicsModel = new DariaKlochkoModel(_aircraft, Vector3.zero,
                         new DariaKlochkoModelData
                         {
