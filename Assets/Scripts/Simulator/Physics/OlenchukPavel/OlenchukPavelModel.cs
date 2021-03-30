@@ -46,11 +46,11 @@ namespace AircraftSimulator.Physics.OlenchukPavel {
             var isForsage = _data.Forsage.IsActive;
             if (isForsage)
             {   
-                var tpk = totalPower;
+                var tpk = totalPower*0.001;
                 int i=1;
                     
                  do {
-                    totalPower += tpk*0.001;
+                    totalPower+=tpk;
                      i++;
                     } while (i<3000);   
                   
