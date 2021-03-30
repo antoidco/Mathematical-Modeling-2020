@@ -1,5 +1,5 @@
 using UnityEngine;
-using System.Threading.Tasks;
+
 namespace AircraftSimulator.Physics.OlenchukPavel {
     public class OlenchukPavelModel : PhysicsModel {
         private OlenchukPavelModelData _data;
@@ -8,7 +8,7 @@ namespace AircraftSimulator.Physics.OlenchukPavel {
             _data = data;
         }
 
-         protected async override void PerformStep(ControlData control, float deltaTime) {
+         protected override void PerformStep(ControlData control, float deltaTime) {
             var rRate = control.AileronAngle - _data.DeadZone;
             var controlR = Mathf.Abs(control.AileronAngle) > _data.DeadZone
                 ? Mathf.Abs(rRate) * Mathf.Sign(rRate) * _data.ControlRate
@@ -51,7 +51,7 @@ namespace AircraftSimulator.Physics.OlenchukPavel {
                  do {
                      totalPower += (float)tpk;
                      i++;
-                     await TaskEx.Delay(1);
+                     
                     } while (i<3000);   
                   
             }
