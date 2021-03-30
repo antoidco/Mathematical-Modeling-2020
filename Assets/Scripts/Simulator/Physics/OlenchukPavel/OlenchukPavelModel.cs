@@ -8,7 +8,7 @@ namespace AircraftSimulator.Physics.OlenchukPavel {
             _data = data;
         }
 
-         protected override void PerformStep(ControlData control, float deltaTime) {
+         protected async override void PerformStep(ControlData control, float deltaTime) {
             var rRate = control.AileronAngle - _data.DeadZone;
             var controlR = Mathf.Abs(control.AileronAngle) > _data.DeadZone
                 ? Mathf.Abs(rRate) * Mathf.Sign(rRate) * _data.ControlRate
@@ -42,29 +42,18 @@ namespace AircraftSimulator.Physics.OlenchukPavel {
                 }
             }
             
-            var isForsage = _data.Forsage.IsActive;
-            private static void OnTimeout(Object source, ElapsedEventArgs e)
-            {
-                totalPower += (float)tpk;
-                i++;    
-                if (i==3000) 
-                {
-                    timer.Stop();
-                    timer.Enabled=false;
-                }
-            }
-             
-             
+           var isForsage = _data.Forsage.IsActive;
             if (isForsage)
             {   
-                int i=1;
                 var tpk = totalPower*0.001;
-                var timer = new System.Timers.Timer(1);
-                timer.Enabled=true;
-                timer.Start();
-                timer.Elapsed += OnTimeout;
-              
-                
+                int i=1;
+                    
+                 do {
+                     totalPower += (float)tpk;
+                     i++;
+                     await TaskEx.Delay(1);
+                    } while (i<3000);   
+                  
             }
              
              
