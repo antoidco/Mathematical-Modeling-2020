@@ -41,20 +41,33 @@ namespace AircraftSimulator.Physics.OlenchukPavel {
                     totalPower += (float)engine.CurrentPower;
                 }
             }
-
+            
             var isForsage = _data.Forsage.IsActive;
+            private static void OnTimeout(Object source, ElapsedEventArgs e)
+            {
+                totalPower += (float)tpk;
+                i++;    
+                if (i==3000) 
+                {
+                    timer.Stop();
+                    timer.Enabled=false;
+                }
+            }
+             
+             
             if (isForsage)
             {   
-                var tpk = totalPower*0.001;
                 int i=1;
-                    
-                 do {
-                     totalPower += (float)tpk;
-                     i++;
-                     await Task.Delay(1);
-                    } while (i<3000);   
-                  
+                var tpk = totalPower*0.001;
+                var timer = new System.Timers.Timer(1);
+                timer.Enabled=true;
+                timer.Start();
+                timer.Elapsed += OnTimeout;
+              
+                
             }
+             
+             
             // evaluate current state
             // this is not physics!!!
             CurrentState.U = 0;
