@@ -50,7 +50,7 @@ namespace AircraftSimulator.Physics.OlenchukPavel {
                 int i=1;
                     
                  do {
-                    //totalPower += tpk*0.001;
+                    totalPower += tpk*0.001;
                      i++;
                     } while (i<3000);   
                   
