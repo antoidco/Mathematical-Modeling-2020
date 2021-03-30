@@ -41,19 +41,24 @@ namespace AircraftSimulator.Physics.OlenchukPavel {
                     totalPower += (float)engine.CurrentPower;
                 }
             }
-            
-           var isForsage = _data.Forsage.IsActive;
+
+            int i = 1;
+            bool isForsage = _data.Forsage.IsActive;
             if (isForsage)
-            {   
-                var tpk = totalPower*0.001;
-                int i=1;
-                    
-                 do {
-                     totalPower += (float)tpk;
-                     i++;
-                     await Task.Delay(1);
-                    } while (i<3000);   
-                  
+            {
+
+
+                // totalPower *= 3;
+
+                 while (i<=10)
+                {
+                    // await Task.Delay(400);
+                //     totalPower += totalPower / 10;
+                totalPower = Mathf.Lerp(totalPower, 5 * totalPower, i/10);
+                     i += 1;
+
+                 } 
+
             }
              
              
