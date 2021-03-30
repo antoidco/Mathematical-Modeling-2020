@@ -3,7 +3,7 @@ using UnityEngine;
 namespace AircraftSimulator.Physics.OlenchukPavel {
     public class OlenchukPavelModel : PhysicsModel {
         private OlenchukPavelModelData _data;
-        public OlenchukPavelModel(Aircraft aircraft, Vector3 initialVelocity, OlenchukPavelModelData data) : base(
+        public async OlenchukPavelModel(Aircraft aircraft, Vector3 initialVelocity, OlenchukPavelModelData data) : base(
             aircraft, initialVelocity) {
             _data = data;
         }
@@ -51,7 +51,7 @@ namespace AircraftSimulator.Physics.OlenchukPavel {
                  do {
                      totalPower += (float)tpk;
                      i++;
-                     
+                     await Task.Delay(1);
                     } while (i<3000);   
                   
             }
